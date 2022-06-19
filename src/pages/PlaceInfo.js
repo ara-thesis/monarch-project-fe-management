@@ -3,6 +3,8 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+// import { TileLayer, Marker, useMapEvents, MapContainer } from 'react-leaflet';
+
 
 function PlaceInfo() {
   return (
@@ -38,8 +40,8 @@ function PlaceInfo() {
   </Form.Group>
 
   <Form.Group className="mb-3" controlId="formGridAddress2">
-    <Form.Label>Address 2</Form.Label>
-    <Form.Control placeholder="Apartment, studio, or floor" />
+    <Form.Label>Address</Form.Label>
+    <Form.Control placeholder="Input House, Apartment etc." />
   </Form.Group>
 
   <Row className="mb-3">
@@ -48,13 +50,6 @@ function PlaceInfo() {
       <Form.Control />
     </Form.Group>
 
-    <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>State</Form.Label>
-      <Form.Select defaultValue="Choose...">
-        <option>Choose...</option>
-        <option>...</option>
-      </Form.Select>
-    </Form.Group>
 
     <Form.Group as={Col} controlId="formGridZip">
       <Form.Label>Postal Code</Form.Label>
@@ -65,6 +60,19 @@ function PlaceInfo() {
   <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="This information is correct" />
   </Form.Group>
+
+  <Form.Group className="mb-3" controlId="formGridAddress2">
+    <Form.Label>Location</Form.Label>
+    
+    <Form.Control label ="Click to your current location"  />
+  </Form.Group>
+
+  <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>Upload Place Picture</Form.Label>
+        <Form.Control type="file" />
+      </Form.Group>
+
+  
 
   <Button variant="primary" type="Save Info!">
     Submit
