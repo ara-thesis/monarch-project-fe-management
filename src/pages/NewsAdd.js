@@ -25,6 +25,11 @@ const NewsAdd = () =>{
         <div>
             <Form addMessage={handleContent}/>
 
+            {data
+                .sort((a,b) => b.id - a.id)
+                .map((article) => (
+                <Articles key={article.id} article={article} deleteArticle={handleDelete}/>
+            ))}
 
         </div>
     )
