@@ -27,7 +27,7 @@ function App() {
           <Route path='/Dashboard' exact component={Dashboard} />
           <Route path='/PlaceInfo' component={PlaceInfo} />
           <Route path='/Ticketing' component={Ticketing} />
-          <Route path='/News'      component={News} />
+          <Route path='/News'    component={News} />
           <Route path={'/Banner'}  component={Banner}/>
         </Switch>
       </Router>

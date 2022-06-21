@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Articles from "../components/Articles";
 import Form from '../components/Form';
 
-const News = () =>{
+const NewsAdd = () =>{
 
     const [data, setData] = useState([]);
     const handleContent = (article) =>{
@@ -25,14 +25,9 @@ const News = () =>{
         <div>
             <Form addMessage={handleContent}/>
 
-            {data
-                .sort((a,b) => b.id - a.id)
-                .map((article) => (
-                <Articles key={article.id} article={article} deleteArticle={handleDelete}/>
-            ))}
 
         </div>
     )
 }
 
-export default News;
+export default NewsAdd;
