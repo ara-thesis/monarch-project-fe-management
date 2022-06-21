@@ -36,7 +36,7 @@ const Articles = ({article, deleteArticle}) => {
                     }
                     <button 
                         onClick={() => {
-                            if(window.confirm("Voulez-vous supprmer cet article ?")){
+                            if(window.confirm("Apakah anda yakin berita ini akan dihapus? ")){
                                 deleteArticle(article.id)
                             }
                         }}>
