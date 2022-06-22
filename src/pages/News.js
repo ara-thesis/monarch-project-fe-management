@@ -9,15 +9,16 @@ const News = () =>{
         <Container>
         <Row>
             <Col>
-        <div style={{ textAlign:'center' }}>
-            <h1>List News</h1>
-        </div>
-        <p>
-        <Link to="/NewsAdd">
-  <Button variant="primary" size="lg">
+        <div style={{ textAlign:'left' ,fontWeight:"bold" }}>
+            <h1>News Manager</h1>
+
+            <Link to="/NewsAdd">
+  <Button variant="primary" size="lg" textAlign="right">
     Add News
   </Button>
 </Link>
+        </div>
+        <p>
         </p>
         <br />
         {/* <Button onClick={getNews}>Click to fetch News</Button> */}
