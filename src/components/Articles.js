@@ -34,6 +34,8 @@ const Articles = ({article, deleteArticle}) => {
                 {isEditing  ? (<textarea autoFocus defaultValue={article.message} className="textarea"></textarea>) 
                     : (<p className="text">{article.message}</p>)
                 }
+
+                    {/* <div> <img>{article.selectedImage}</img></div> */}
                 <div className="button">
                     {isEditing ? <button onClick={() => handleClickValid(article.id)}>Valider</button> :
                         <button onClick={() => setIsEditing(true)}>Edit</button>

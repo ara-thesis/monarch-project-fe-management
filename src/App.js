@@ -7,6 +7,7 @@ import Ticketing from './pages/Ticketing';
 import PlaceInfo from './pages/PlaceInfo';
 import News from './pages/News';
 import Banner from './pages/Banner';
+import NewsAdd from './pages/NewsAdd';
 import NavigationB from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container,} from'react-bootstrap';
@@ -30,6 +31,7 @@ function App() {
           <Route path='/News'    component={News} />
           <Route path={'/Banner'}  component={Banner}/>
         </Switch>
+          <Route path={'/NewsAdd'} component={NewsAdd}/>
       </Router>
     </>
       </header>
