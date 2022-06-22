@@ -7,6 +7,18 @@ function TestApi(){
     useEffect(() => {
         Axios.get('https://jsonplaceholder.typicode.com/posts').then(res => console.log(res.data)).catch(err => console.log(err))
     }, [])
+
+    const postData = (e) =>{
+        e.preventDefault();
+        Axios.post('https://jsonplaceholder.typicode.com/posts',{
+            title,
+            body
+        }).then(res => console.log('Posting data',res)).catch(err => console.log(err))
+        
+
+
+
+    }
     return(
         <Container>
         <div>            
