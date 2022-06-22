@@ -24,8 +24,12 @@ const Articles = ({article, deleteArticle}) => {
         <div>
             <div className="articles" style={{background: isEditing ? "rgba(127, 255, 212, 0.233)" : "white"}}>
                 <div className="AuthorDate">
-                    <div style={{fontWeight:"bold"}}>{article.author}</div>
-                    <div>poste du {getDate(article.date)}</div>
+                    <div style={{fontWeight:"bold"}}>{article.title}</div>
+
+                    <div style={{fontFamily:"sans-serif"}}>Status : {article.status}</div>
+
+                    <div>Berita Diposting pada {getDate(article.date)}</div>
+                    
                 </div>
                 {isEditing  ? (<textarea autoFocus defaultValue={article.message} className="textarea"></textarea>) 
                     : (<p className="text">{article.message}</p>)

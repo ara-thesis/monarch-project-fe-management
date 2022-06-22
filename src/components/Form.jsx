@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 
 const Form = ({addMessage}) => {
 
-    const [author, setAuthor] = useState("");
+    const [title, setTitle] = useState("");
+    const [status,  setStatus] = useState("");
     const [message, setMessage] = useState("");
     const [date, setDate] = useState(Date.now());
     const [error, setError] = useState(false);
@@ -12,14 +13,16 @@ const Form = ({addMessage}) => {
         if(message.length < 140){
             setError(true);
         }else{
-            (author === "" || message === "") ? alert("Harap lengkapi semua bidang") : (
+            (title === "" || status == ""|| message === "") ? alert("Veuillez renseigner tous les champs") : (
                 addMessage({
                 id: new Date().getTime(),
-                author,
+                title,
+                status,
                 message,
                 date
                 })) 
-                setAuthor("")
+                setTitle("")
+                setStatus("Status = ")
                 setMessage("")
                 setError(false);
             }
@@ -31,20 +34,26 @@ const Form = ({addMessage}) => {
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 
-                    placeholder="Author" 
-                    onChange={(e) => setAuthor(e.target.value)}
-                    value={author}
+                    placeholder="Title" 
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
                 />
+                                <input 
+                    type="text" 
+                    placeholder="Status" 
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                /> 
                 
                 <textarea 
                     style={{border: error ? "1px solid red" : ".5px solid rgba(128, 128, 128, 0.555)"}}
                     cols="100" 
-                    rows="20"
+                    rows="18"
                     onChange={(e) => setMessage(e.target.value)}
                     value={message}
-                    placeholder="Tulis Berita yang ingin anda"
+                    placeholder="Ecrire votre message"
                 ></textarea>
-                {error && <div style={{textAlign:"center", color:"red"}}>Jumlah karakter dalam pesan Anda harus lebih dari 140 karakter!</div>}
+                {error && <div style={{textAlign:"center", color:"red"}}>Le nombre de caractere de votre message doit superieur a 140 !</div>}
                 
                 <div className="submit">
                     <input type="submit" value="Send"/>  
@@ -55,3 +64,4 @@ const Form = ({addMessage}) => {
     )
 } 
 export default Form;
+
