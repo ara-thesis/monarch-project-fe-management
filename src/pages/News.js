@@ -1,8 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
+import NewsAdd from './NewsAdd';
+import Articles from "../components/Articles"
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 
 const News = () =>{
+
+    const handleDelete = (id) =>{
+        const newDelete = [...NewsAdd.data];
+        const index = newDelete.findIndex((i) => i.id === id);
+
+        newDelete.splice(index, 1);
+        // console.log(index)
+        NewsAdd.setData(newDelete);
+    }
+
+    console.log(NewsAdd.data)
 
     return(
 
@@ -17,6 +30,13 @@ const News = () =>{
     Add News
   </Button>
 </Link>
+
+            {/* return datanya dari news add */}
+            {/* {NewsAdd.data
+                .sort((a,b) => b.id - a.id)
+                .map((article) => (
+                <Articles key={article.id} article={article} deleteArticle={handleDelete}/>
+            ))} */}
         </div>
         <p>
         </p>
@@ -30,7 +50,7 @@ const News = () =>{
                         <Card.Body>
                         <Card.Title>Messi liburan ke Bandung</Card.Title>
                         <Card.Text>
-                        Messi dikabarkan terlihat di lokasi wisata The Great Asia Afrika, dia tampak sedang berlibur dengan keluarganya, yang tanpa diduga Messi pun sangat lihai dalam menggunakan bahasa Sunda. Setelah berbincang dengan Messi diketahui Messi rupanya akang-akang asli Bandung dengan nama Messi Tatang Jangkung.
+                       
                         </Card.Text>
                         <Button variant="primary">Baca selengkapnya</Button>
                         </Card.Body>
