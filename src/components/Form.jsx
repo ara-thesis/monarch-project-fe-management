@@ -52,7 +52,7 @@ const Form = ({addMessage}) => {
         if(message.length < 140){
             setError(true);
         }else{
-            (title === "" || status == ""|| message === "" || selectedImage == "") ? alert("Veuillez renseigner tous les champs") : (
+            (title === "" || status == ""|| message === "" || selectedImage == "") ? alert("Harap lengkapi semua field!") : (
                 addMessage({
                 id: new Date().getTime(),
                 title,
