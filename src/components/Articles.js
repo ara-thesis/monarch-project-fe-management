@@ -35,7 +35,7 @@ const Articles = ({article, deleteArticle}) => {
                     : (<p className="text">{article.message}</p>)
                 }
 
-                    {/* <div> <img>{article.selectedImage}</img></div> */}
+                    <div> <img>{article.selectedImage}</img></div>
                 <div className="button">
                     {isEditing ? <button onClick={() => handleClickValid(article.id)}>Valider</button> :
                         <button onClick={() => setIsEditing(true)}>Edit</button>

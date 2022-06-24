@@ -88,8 +88,27 @@ const Form = ({addMessage}) => {
                         marginBottom:"40px",
                     }}
                 />
+
+              <div>
+               <select id="lang" onChange={(e) => setStatus(e.target.value) }
+                    value={status} style={{
+                      border: '1px solid #000',
+                      height: 50,
+                      overflow: 'hidden',
+                      padding: '8px',
+                      width: 300
+                    }}>
+                  <option value="select">Status</option>
+                  <option value="Java">Available</option>
+                  <option value="C++">Not Available</option>
+               </select>
+               {/* <p></p>
+               <p>{status}</p> */}
+              </div>
+
+
                 
-                <input 
+                {/* <input 
                     type="text" 
                     placeholder="Status" 
                     onChange={(e) => setStatus(e.target.value)}
@@ -102,7 +121,7 @@ const Form = ({addMessage}) => {
                         paddingRight: "6px",
                         marginLeft:"20px",
                     }}
-                /> 
+                />  */}
 
 
                 

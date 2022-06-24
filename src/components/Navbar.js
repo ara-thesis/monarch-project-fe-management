@@ -7,7 +7,7 @@ const NavigationB = () => {
     return(        
         <div>
         <Navbar bg="light" expand="lg">        
-          <Navbar.Brand href="/Dashboard">JakSign</Navbar.Brand>
+          <Navbar.Brand href="/Dashboard">Travelia</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
           </Navbar.Collapse>
           <div style={{ textAlign:'center',  float:'right'}}>
