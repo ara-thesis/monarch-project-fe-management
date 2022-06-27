@@ -3,6 +3,8 @@ import '../App.css';
 import { Button, Modal, Container, Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ReactDOM } from 'react';
+import { Link } from "react-router-dom";
+import Register from './Register';
 
 class Login extends React.Component {
   
