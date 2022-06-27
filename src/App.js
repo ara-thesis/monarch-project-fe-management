@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
-import Navbar from './components/Sidebar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Dashboard from './pages/Dashboard';
 import Ticketing from './pages/Ticketing';
 import PlaceInfo from './pages/PlaceInfo';
 import News from './pages/News';
 import Banner from './pages/Banner';
 import NewsAdd from './pages/NewsAdd';
+import NotFound from "./pages/NotFound";
 import NavigationB from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container,} from'react-bootstrap';
+import Layout from "./components/Layout";
 
 function App() {
   return (
@@ -21,18 +22,22 @@ function App() {
       <header className="App-header">
 
     <>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path='/' exact component={Dashboard}/>
-          <Route path='/Dashboard' exact component={Dashboard} />
-          <Route path='/PlaceInfo' component={PlaceInfo} />
-          <Route path='/Ticketing' component={Ticketing} />
-          <Route path='/News'    component={News} />
-          <Route path={'/Banner'}  component={Banner}/>
-        </Switch>
-          <Route path={'/NewsAdd'} component={NewsAdd}/>
-      </Router>
+    <BrowserRouter>
+            <Route render={(props)=>(
+                <Layout {...props}>
+                    <Switch>
+                        <Route path="/" exact component={Dashboard}/>
+                        <Route path="/Dashboard" exact component={Dashboard}/>
+                        <Route path="/PlaceInfo" component={PlaceInfo}/>
+                        <Route path="/News" component={News}/>
+                        <Route path="/Ticketing" component={Ticketing}/>
+                        <Route path="/Banner" component={Banner}/>
+                        <Route component={NotFound}/>
+                    </Switch>
+                </Layout>
+            )}/>
+                      <Route path={'/NewsAdd'} component={NewsAdd}/>
+        </BrowserRouter>
     </>
       </header>
 
