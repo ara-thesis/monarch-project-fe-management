@@ -7,7 +7,6 @@ import PlaceInfo from './pages/PlaceInfo';
 import News from './pages/News';
 import Banner from './pages/Banner';
 import NewsAdd from './pages/NewsAdd';
-import NotFound from "./pages/NotFound";
 import NavigationB from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container,} from'react-bootstrap';
@@ -26,17 +25,15 @@ function App() {
             <Route render={(props)=>(
                 <Layout {...props}>
                     <Switch>
-                        <Route path="/" exact component={Dashboard}/>
+                    <Route path={'/NewsAdd'} component={NewsAdd}/>
                         <Route path="/Dashboard" exact component={Dashboard}/>
                         <Route path="/PlaceInfo" component={PlaceInfo}/>
                         <Route path="/News" component={News}/>
                         <Route path="/Ticketing" component={Ticketing}/>
                         <Route path="/Banner" component={Banner}/>
-                        <Route component={NotFound}/>
                     </Switch>
                 </Layout>
             )}/>
-                      <Route path={'/NewsAdd'} component={NewsAdd}/>
         </BrowserRouter>
     </>
       </header>
