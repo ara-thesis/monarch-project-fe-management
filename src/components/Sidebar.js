@@ -29,7 +29,7 @@ function Sidebar(props, {defaultActive,}) {
     return (
         <>
             <SidebarParent>
-                <div style={{position: 'fixed'  }}>
+                <div style={{position: 'fixed'}}>
                     {
                         SidebarData.map((item, index)=> {
                             return (
@@ -39,16 +39,15 @@ function Sidebar(props, {defaultActive,}) {
                                     >
                                         <p>{item.name}</p>
                                     </SidebarItem>
-                                    
                                 </Link>
-                                
                             );
                         })
                     }
 
                 </div>
-                <div className="width-sidebar"/>
+                <div className="behind-the-scenes"/>
 
+                <span className="block-example border-right border-dark"></span>
             </SidebarParent>
         </>
     );
@@ -58,20 +57,18 @@ export default Sidebar;
 
 const SidebarParent = styled.div`
   background: #F4FDFF;
-  border-right: 1px solid;
-  border-radius: 0;
-  border-color: #000000;
+  
   a {
     text-decoration: none;
   }
   
   & > div {
-    width: 200px;
+    width: 250px;
     height: 100vh;
   }
   
-  .width-sidebar {
-    width: 200px;
+  .behind-the-scenes {
+    width: 250px;
     
   }
 `;

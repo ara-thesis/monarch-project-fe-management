@@ -32,14 +32,12 @@ function App() {
                         <Route path="/News" component={News}/>
                         <Route path="/Ticketing" component={Ticketing}/>
                         <Route path="/Banner" component={Banner}/>
-                        <Route path={'/NewsAdd'} component={NewsAdd}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </Layout>
-                
             )}/>
+                      <Route path={'/NewsAdd'} component={NewsAdd}/>
         </BrowserRouter>
-        
     </>
       </header>
 

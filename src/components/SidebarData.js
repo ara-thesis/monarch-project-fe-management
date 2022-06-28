@@ -1,8 +1,8 @@
 export const SidebarData = [
-//   {
-//     name: "Travelia",
-//     route: '/'
-// },
+  {
+    name: "Travelia",
+    route: '/'
+},
 {
     name: "Dashboard",
     route: '/dashboard',

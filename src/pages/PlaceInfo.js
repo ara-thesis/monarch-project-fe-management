@@ -7,11 +7,9 @@ import Col from 'react-bootstrap/Col';
 
 
 function PlaceInfo() {
-
-  
   return (
 <Form>
-  <Form.Group className="mb-3" controlId="place-name" styles={styles.centered}  >
+  <Form.Group className="mb-3" controlId="place-name">
     <Form.Label>Place name</Form.Label>
     <Form.Control type="placename" placeholder="Enter place name" />
     {/* <Form.Text className="text-muted">
@@ -84,12 +82,3 @@ function PlaceInfo() {
 }
 
 export default PlaceInfo;
-
-const styles={
-    centered:{
-      display: 'flex',  justifyContent:'center', alignItems:'center', width:'50px'
-    }
-
-}
-
-
