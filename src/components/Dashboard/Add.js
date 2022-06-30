@@ -119,9 +119,9 @@ const Add = ({ news, setNews, setIsAdding }) => {
             marginLeft:"20px",
         }}
         >
-          <option value="select">Status</option>
-          <option value="Java">Available</option>
-          <option value="C++">Not Available</option>
+          <option placeholder="Status">Status</option>
+          <option value="Shared">Shared</option>
+          <option value="Not Shared">Not Shared</option>
 
         </select>
 
@@ -145,6 +145,39 @@ const Add = ({ news, setNews, setIsAdding }) => {
           value={date}
           onChange={e => setDate(e.target.value)}
         />
+
+<>
+
+
+<div style={styles.container}>
+  <input
+    accept="image/*"
+    type="file"
+    onChange={imageChange}
+    style={{
+      width: "30%",
+      paddingLeft: "8px",
+      paddingTop: "6px",
+      paddingBottom: "6px",
+      paddingRight: "6px",
+      marginTop:"20px",
+  }}
+  />
+
+  {selectedImage && (
+    <div style={styles.preview}>
+      <img
+        src={URL.createObjectURL(selectedImage)}
+        style={styles.image}
+        alt="Thumb"
+      />
+      <button onClick={removeSelectedImage} style={styles.delete}>
+        Remove This Image
+      </button>
+    </div>
+  )}
+</div>
+</>
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Add" />
           <input
@@ -154,39 +187,6 @@ const Add = ({ news, setNews, setIsAdding }) => {
             value="Cancel"
             onClick={() => setIsAdding(false)}
           />
-
-<>
-
-
-      <div style={styles.container}>
-        <input
-          accept="image/*"
-          type="file"
-          onChange={imageChange}
-          style={{
-            width: "30%",
-            paddingLeft: "8px",
-            paddingTop: "6px",
-            paddingBottom: "6px",
-            paddingRight: "6px",
-            marginTop:"20px",
-        }}
-        />
-
-        {selectedImage && (
-          <div style={styles.preview}>
-            <img
-              src={URL.createObjectURL(selectedImage)}
-              style={styles.image}
-              alt="Thumb"
-            />
-            <button onClick={removeSelectedImage} style={styles.delete}>
-              Remove This Image
-            </button>
-          </div>
-        )}
-      </div>
-    </>
         </div>
       </form>
     </div>

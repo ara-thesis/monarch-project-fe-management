@@ -5,9 +5,9 @@ import Logout from '../Logout';
 const Header = ({ setIsAdding, setIsAuthenticated }) => {
   return (
     <header>
-      <h3>News Management</h3>
+      <h3>Ticket Management</h3>
       <div style={{ marginTop: '30px', marginBottom: '18px' }}>
-        <button onClick={() => setIsAdding(true)}>Add News</button>
+        <button onClick={() => setIsAdding(true)}>Add Ticket</button>
         <Logout setIsAuthenticated={setIsAuthenticated} />
       </div>
     </header>

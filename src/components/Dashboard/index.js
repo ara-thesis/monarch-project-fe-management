@@ -6,10 +6,10 @@ import Table from './Table';
 import Add from './Add';
 import Edit from './Edit';
 
-import { employeesData } from '../../data';
+import { newsData } from '../../data';
 
 const Dashboard = ({ setIsAuthenticated }) => {
-  const [news, setNews] = useState(employeesData);
+  const [news, setNews] = useState(newsData);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);

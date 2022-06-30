@@ -1,16 +1,16 @@
 import React from 'react';
 // import Add from './Add';
 
-const Table = ({ news, handleEdit, handleDelete }) => {
-  news.forEach((EditNews, i) => {
-    EditNews.id = i + 1;
+const Table = ({ ticket, handleEdit, handleDelete }) => {
+  ticket.forEach((EditTicket, i) => {
+    EditTicket.id = i + 1;
   });
 
-  // const formatter = new Intl.NumberFormat('en-US', {
-  //   style: 'currency',
-  //   currency: 'USD',
-  //   minimumFractionDigits: null,
-  // });
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: null,
+  });
 
   return (
     <div className="contain-table">
@@ -18,29 +18,25 @@ const Table = ({ news, handleEdit, handleDelete }) => {
         <thead>
           <tr>
             <th>No.</th>
-            <th>Title</th>
-            <th>Status</th>
-            <th>News</th>
-            <th>Date</th>
-            <th>Image</th>
+            <th>Ticket Name</th>
+            <th>Ticket Details</th>
+            <th>Ticket Price</th>
             <th colSpan={2} className="text-center">
               Actions
             </th>
           </tr>
         </thead>
         <tbody>
-          {news.length > 0 ? (
-            news.map((EditNews, i) => (
-              <tr key={EditNews.id}>
+          {ticket.length > 0 ? (
+            ticket.map((EditTicket, i) => (
+              <tr key={EditTicket.id}>
                 <td>{i + 1}</td>
-                <td>{EditNews.title}</td>
-                <td>{EditNews.status}</td>
-                <td>{EditNews.message}</td>
-                <td>{EditNews.date} </td>
-                {/* <img id="target" src={Add.state.s}/> */}
+                <td>{EditTicket.ticketName}</td>
+                <td>{EditTicket.ticketDetails}</td>
+                <td>{formatter.format(EditTicket.ticketPrice)}</td>
                 <td className="text-right">
                   <button
-                    onClick={() => handleEdit(EditNews.id)}
+                    onClick={() => handleEdit(EditTicket.id)}
                     className="button muted-button"
                   >
                     Edit
@@ -48,7 +44,7 @@ const Table = ({ news, handleEdit, handleDelete }) => {
                 </td>
                 <td className="text-left">
                   <button
-                    onClick={() => handleDelete(EditNews.id)}
+                    onClick={() => handleDelete(EditTicket.id)}
                     className="button muted-button"
                   >
                     Delete
@@ -58,7 +54,7 @@ const Table = ({ news, handleEdit, handleDelete }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={7}>No News</td>
+              <td colSpan={7}>No Ticket</td>
             </tr>
           )}
         </tbody>

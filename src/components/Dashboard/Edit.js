@@ -124,9 +124,9 @@ const Edit = ({ news, selectedEmployee, setNews, setIsEditing }) => {
             marginLeft:"20px",
         }}
         >
-          <option value="select">Status</option>
-          <option value="Java">Available</option>
-          <option value="C++">Not Available</option>
+          <option placeholder="Status">Status</option>
+          <option value="Shared">Shared</option>
+          <option value="Not Shared">Not Shared</option>
 
         </select>
 
@@ -150,17 +150,7 @@ const Edit = ({ news, selectedEmployee, setNews, setIsEditing }) => {
           value={date}
           onChange={e => setDate(e.target.value)}
         />
-        <div style={{ marginTop: '30px' }}>
-          <input type="submit" value="Add" />
-          <input
-            style={{ marginLeft: '12px' }}
-            className="muted-button"
-            type="button"
-            value="Cancel"
-            onClick={() => setIsEditing(false)}
-          />
-
-<>
+        <>
 
 
 <div style={styles.container}>
@@ -192,6 +182,17 @@ const Edit = ({ news, selectedEmployee, setNews, setIsEditing }) => {
   )}
 </div>
 </>
+
+
+        <div style={{ marginTop: '30px' }}>
+          <input type="submit" value="Add" />
+          <input
+            style={{ marginLeft: '12px' }}
+            className="muted-button"
+            type="button"
+            value="Cancel"
+            onClick={() => setIsEditing(false)}
+          />
         </div>
       </form>
     </div>

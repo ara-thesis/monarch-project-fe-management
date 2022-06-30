@@ -57,18 +57,20 @@ export default Sidebar;
 
 const SidebarParent = styled.div`
   background: #F4FDFF;
+  border: solid 1px black;
+  padding-top: 20px;
   
   a {
     text-decoration: none;
   }
   
   & > div {
-    width: 250px;
+    width: 200px;
     height: 100vh;
   }
   
   .behind-the-scenes {
-    width: 250px;
+    width: 200px;
     
   }
 `;
@@ -88,6 +90,7 @@ const SidebarItem = styled.div`
   
   &:hover {
     cursor:pointer;
+    background-color: yellow;
   }
   
   &:hover:not(:first-child) {
