@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Add = ({ employees, setEmployees, setIsAdding }) => {
-  const [firstName, setFirstName] = useState('');
+const Add = ({ news, setNews, setIsAdding }) => {
+  const [title, setTitle] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [salary, setSalary] = useState('');
@@ -11,7 +11,7 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
   const handleAdd = e => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !salary || !date) {
+    if (!title || !lastName || !email || !salary || !date) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -20,25 +20,25 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
       });
     }
 
-    const id = employees.length + 1;
-    const newEmployee = {
+    const id = news.length + 1;
+    const newNews = {
       id,
-      firstName,
+      title,
       lastName,
       email,
       salary,
       date,
     };
 
-    employees.push(newEmployee);
-    localStorage.setItem('employees_data', JSON.stringify(employees));
-    setEmployees(employees);
+    news.push(newNews);
+    localStorage.setItem('employees_data', JSON.stringify(news));
+    setNews(news);
     setIsAdding(false);
 
     Swal.fire({
       icon: 'success',
       title: 'Added!',
-      text: `${firstName} ${lastName}'s data has been Added.`,
+      text: `${title} ${lastName}'s data has been Added.`,
       showConfirmButton: false,
       timer: 1500,
     });
@@ -48,13 +48,13 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
     <div className="small-container">
       <form onSubmit={handleAdd}>
         <h1>Add Employee</h1>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="title">Title</label>
         <input
-          id="firstName"
+          id="title"
           type="text"
-          name="firstName"
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
+          name="title"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
         />
         <label htmlFor="lastName">Last Name</label>
         <input
