@@ -9,20 +9,20 @@ import Edit from './Edit';
 import { employeesData } from '../../data';
 
 const Dashboard = ({ setIsAuthenticated }) => {
-  const [employees, setEmployees] = useState(employeesData);
+  const [news, setNews] = useState(employeesData);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('employees_data'));
-    if (data !== null && Object.keys(data).length !== 0) setEmployees(data);
+    if (data !== null && Object.keys(data).length !== 0) setNews(data);
   }, []);
 
   const handleEdit = id => {
-    const [employee] = employees.filter(employee => employee.id === id);
+    const [Editnews] = news.filter(news => Editnews.id === id);
 
-    setSelectedEmployee(employee);
+    setSelectedEmployee(Editnews);
     setIsEditing(true);
   };
 
@@ -36,19 +36,19 @@ const Dashboard = ({ setIsAuthenticated }) => {
       cancelButtonText: 'No, cancel!',
     }).then(result => {
       if (result.value) {
-        const [employee] = employees.filter(employee => employee.id === id);
+        const [Editnews] = news.filter(Editnews => Editnews.id === id);
 
         Swal.fire({
           icon: 'success',
           title: 'Deleted!',
-          text: `${employee.firstName} ${employee.lastName}'s data has been deleted.`,
+          text: `${Editnews.title}'s data has been deleted.`,
           showConfirmButton: false,
           timer: 1500,
         });
 
-        const employeesCopy = employees.filter(employee => employee.id !== id);
-        localStorage.setItem('employees_data', JSON.stringify(employeesCopy));
-        setEmployees(employeesCopy);
+        const newsCopy = news.filter(Editnews => Editnews.id !== id);
+        localStorage.setItem('employees_data', JSON.stringify(newsCopy));
+        setNews(newsCopy);
       }
     });
   };
@@ -62,7 +62,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
             setIsAuthenticated={setIsAuthenticated}
           />
           <Table
-            employees={employees}
+            news={news}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
           />
@@ -70,16 +70,16 @@ const Dashboard = ({ setIsAuthenticated }) => {
       )}
       {isAdding && (
         <Add
-          employees={employees}
-          setEmployees={setEmployees}
+          news={news}
+          setNews={setNews}
           setIsAdding={setIsAdding}
         />
       )}
       {isEditing && (
         <Edit
-          employees={employees}
+          news={news}
           selectedEmployee={selectedEmployee}
-          setEmployees={setEmployees}
+          setNews={setNews}
           setIsEditing={setIsEditing}
         />
       )}

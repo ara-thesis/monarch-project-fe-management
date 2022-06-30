@@ -1,19 +1,55 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
+const Edit = ({ news, selectedEmployee, setNews, setIsEditing }) => {
   const id = selectedEmployee.id;
 
-  const [firstName, setFirstName] = useState(selectedEmployee.firstName);
-  const [lastName, setLastName] = useState(selectedEmployee.lastName);
-  const [email, setEmail] = useState(selectedEmployee.email);
-  const [salary, setSalary] = useState(selectedEmployee.salary);
+  const [title, setTitle] = useState(selectedEmployee.title);
+  const [status, setStatus] = useState(selectedEmployee.status);
+  const [message, setMessage] = useState(selectedEmployee.message);
   const [date, setDate] = useState(selectedEmployee.date);
+  const [selectedImage, setSelectedImage] = useState(selectedEmployee.selectedImage);
+
+  const styles = {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingTop: 50,
+    },
+    preview: {
+      marginTop: 50,
+      display: "flex",
+      flexDirection: "column",
+    },
+    image: { maxWidth: "100%", maxHeight: 320 },
+    delete: {
+      cursor: "pointer",
+      padding: 15,
+      background: "red",
+      color: "white",
+      border: "none",
+    },
+  };
+
+  
+            //function ini dipanggil ketika file akan diganti/di change
+            const imageChange = (e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                setSelectedImage(e.target.files[0]);
+              }
+          };
+          
+          //function ini dipanggil ketika file akan dihapus
+          const removeSelectedImage = () => {
+              setSelectedImage();
+          };
 
   const handleUpdate = e => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !salary || !date) {
+    if (!title || !status || !message || !date || !selectedImage) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -22,30 +58,31 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
       });
     }
 
-    const employee = {
+    const Editnews  = {
+      //employee
       id,
-      firstName,
-      lastName,
-      email,
-      salary,
+      title,
+      status,
+      message,
       date,
+      selectedImage,
     };
 
-    for (let i = 0; i < employees.length; i++) {
-      if (employees[i].id === id) {
-        employees.splice(i, 1, employee);
+    for (let i = 0; i < news.length; i++) {
+      if (news[i].id === id) {
+        news.splice(i, 1, Editnews);
         break;
       }
     }
 
-    localStorage.setItem('employees_data', JSON.stringify(employees));
-    setEmployees(employees);
+    localStorage.setItem('employees_data', JSON.stringify(news));
+    setNews(news);
     setIsEditing(false);
 
     Swal.fire({
       icon: 'success',
       title: 'Updated!',
-      text: `${employee.firstName} ${employee.lastName}'s data has been updated.`,
+      text: `${Editnews.title}'s data has been updated.`,
       showConfirmButton: false,
       timer: 1500,
     });
@@ -55,38 +92,56 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
     <div className="small-container">
       <form onSubmit={handleUpdate}>
         <h1>Edit Employee</h1>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="title">Title</label>
         <input
-          id="firstName"
+          id="title"
           type="text"
-          name="firstName"
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
+          name="title"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          style={{
+            width: "100%",
+            paddingLeft: "8px",
+            paddingTop: "6px",
+            paddingBottom: "6px",
+            paddingRight: "6px",
+            marginBottom:"40px",
+        }}
         />
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          id="lastName"
+        <label htmlFor="status">Status</label>
+        <select
+          id="status"
           type="text"
-          name="lastName"
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <label htmlFor="salary">Salary ($)</label>
-        <input
-          id="salary"
-          type="number"
-          name="salary"
-          value={salary}
-          onChange={e => setSalary(e.target.value)}
-        />
+          name="status"
+          value={status}
+          onChange={e => setStatus(e.target.value)}
+          style={{
+            width: "50%",
+            paddingLeft: "8px",
+            paddingTop: "6px",
+            paddingBottom: "6px",
+            paddingRight: "6px",
+            marginLeft:"20px",
+        }}
+        >
+          <option value="select">Status</option>
+          <option value="Java">Available</option>
+          <option value="C++">Not Available</option>
+
+        </select>
+
+        <label htmlFor="message">Message</label>
+        <textarea
+          id="message"
+          type="text"
+          name="message"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          style={{"1px solid red" : ".5px solid rgba(128, 128, 128, 0.555)"}}
+          cols="100" 
+          rows="18"
+          placeholder="Tulis berita anda"
+        ></textarea>
         <label htmlFor="date">Date</label>
         <input
           id="date"
@@ -96,7 +151,7 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
           onChange={e => setDate(e.target.value)}
         />
         <div style={{ marginTop: '30px' }}>
-          <input type="submit" value="Update" />
+          <input type="submit" value="Add" />
           <input
             style={{ marginLeft: '12px' }}
             className="muted-button"
@@ -104,6 +159,39 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
             value="Cancel"
             onClick={() => setIsEditing(false)}
           />
+
+<>
+
+
+<div style={styles.container}>
+  <input
+    accept="image/*"
+    type="file"
+    onChange={imageChange}
+    style={{
+      width: "30%",
+      paddingLeft: "8px",
+      paddingTop: "6px",
+      paddingBottom: "6px",
+      paddingRight: "6px",
+      marginTop:"20px",
+  }}
+  />
+
+  {selectedImage && (
+    <div style={styles.preview}>
+      <img
+        src={URL.createObjectURL(selectedImage)}
+        style={styles.image}
+        alt="Thumb"
+      />
+      <button onClick={removeSelectedImage} style={styles.delete}>
+        Remove This Image
+      </button>
+    </div>
+  )}
+</div>
+</>
         </div>
       </form>
     </div>
