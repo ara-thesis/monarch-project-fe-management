@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 
 const Add = ({ news, setNews, setIsAdding }) => {
   const [title, setTitle] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [status, setStatus] = useState('');
   const [email, setEmail] = useState('');
   const [salary, setSalary] = useState('');
   const [date, setDate] = useState('');
@@ -11,7 +11,7 @@ const Add = ({ news, setNews, setIsAdding }) => {
   const handleAdd = e => {
     e.preventDefault();
 
-    if (!title || !lastName || !email || !salary || !date) {
+    if (!title || !status || !email || !salary || !date) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -24,7 +24,7 @@ const Add = ({ news, setNews, setIsAdding }) => {
     const newNews = {
       id,
       title,
-      lastName,
+      status,
       email,
       salary,
       date,
@@ -38,7 +38,7 @@ const Add = ({ news, setNews, setIsAdding }) => {
     Swal.fire({
       icon: 'success',
       title: 'Added!',
-      text: `${title} ${lastName}'s data has been Added.`,
+      text: `${title} ${status}'s data has been Added.`,
       showConfirmButton: false,
       timer: 1500,
     });
@@ -56,14 +56,19 @@ const Add = ({ news, setNews, setIsAdding }) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          id="lastName"
+        <label htmlFor="status">Status</label>
+        <select
+          id="status"
           type="text"
-          name="lastName"
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-        />
+          name="status"
+          value={status}
+          onChange={e => setStatus(e.target.value)}
+        >
+          <option value="select">Status</option>
+          <option value="Java">Available</option>
+          <option value="C++">Not Available</option>
+
+        </select>
         <label htmlFor="email">Email</label>
         <input
           id="email"
