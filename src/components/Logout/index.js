@@ -3,6 +3,11 @@ import Swal from 'sweetalert2';
 
 const Logout = ({ setIsAuthenticated }) => {
   const handleLogout = () => {
+
+    // empty token
+    localStorage.setItem("token", "")
+
+    // success message
     Swal.fire({
       icon: 'question',
       title: 'Logging Out',
