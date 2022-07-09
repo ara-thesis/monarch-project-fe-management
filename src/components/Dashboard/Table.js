@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 // import Add from './Add';
 
+
+// const Table = ({ news, handleEdit, handleDelete }) => {
 const Table = ({ apiNews, handleEdit, handleDelete }) => {
 
   // let newsList = [];
@@ -14,7 +16,7 @@ const Table = ({ apiNews, handleEdit, handleDelete }) => {
     };
     fetchProcess();
     
-  }, [newsList]);
+  }, [apiNews, newsList]);
 
   // news.forEach((EditNews, i) => {
   //   EditNews.id = i + 1;

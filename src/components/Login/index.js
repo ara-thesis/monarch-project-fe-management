@@ -6,8 +6,6 @@ const Login = ({ setIsAuthenticated }) => {
   // const adminEmail = "asdf@asdf.com";
   // const adminPassword = "asdf@asdf.com";
 
-  const respData = {}
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

@@ -47,8 +47,6 @@ const Dashboard = ({ setIsAuthenticated }) => {
     }).then(result => {
       if (result.value) {
         // const [Editnews] = news.filter(Editnews => Editnews.id === id);
-        
-        console.log(id);
 
         apiNews.delete(`news/${id}`).then(resp => {
           Swal.fire({
@@ -85,6 +83,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
           />
           <Table
             apiNews={apiNews}
+            // news={news}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
           />
@@ -92,8 +91,9 @@ const Dashboard = ({ setIsAuthenticated }) => {
       )}
       {isAdding && (
         <Add
-          news={news}
-          setNews={setNews}
+          // news={news}
+          apiNews={apiNews}
+          // setNews={setNews}
           setIsAdding={setIsAdding}
         />
       )}
