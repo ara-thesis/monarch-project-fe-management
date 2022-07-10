@@ -7,18 +7,13 @@ import Table from './Table';
 import Add from './Add';
 import Edit from './Edit';
 
-import { newsData } from '../../data';
+// import { newsData } from '../../data';
 
 const Dashboard = ({ setIsAuthenticated }) => {
-  const [news, setNews] = useState(newsData);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  // const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('employees_data'));
-    if (data !== null && Object.keys(data).length !== 0) setNews(data);
-  }, []);
+  const [currData, setCurrData] = useState();
 
   const apiNews = axios.create({
     baseURL: "http://172.22.56.135:8000/api",
@@ -28,13 +23,6 @@ const Dashboard = ({ setIsAuthenticated }) => {
       'Authorization': `Bearer ${localStorage.getItem("token")}`
     },
   })
-
-  const handleEdit = id => {
-    const [Editnews] = news.filter(news => Editnews.id === id);
-
-    setSelectedEmployee(Editnews);
-    setIsEditing(true);
-  };
 
   const handleDelete = id => {
     Swal.fire({
@@ -46,7 +34,6 @@ const Dashboard = ({ setIsAuthenticated }) => {
       cancelButtonText: 'No, cancel!',
     }).then(result => {
       if (result.value) {
-        // const [Editnews] = news.filter(Editnews => Editnews.id === id);
 
         apiNews.delete(`news/${id}`).then(resp => {
           Swal.fire({
@@ -58,17 +45,6 @@ const Dashboard = ({ setIsAuthenticated }) => {
           });
         });
 
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Deleted!',
-        //   text: `${Editnews.title}'s data has been deleted.`,
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
-
-        // const newsCopy = news.filter(Editnews => Editnews.id !== id);
-        // localStorage.setItem('employees_data', JSON.stringify(newsCopy));
-        // setNews(newsCopy);
       }
     });
   };
@@ -83,26 +59,23 @@ const Dashboard = ({ setIsAuthenticated }) => {
           />
           <Table
             apiNews={apiNews}
-            // news={news}
-            handleEdit={handleEdit}
+            setIsEditing={setIsEditing}
             handleDelete={handleDelete}
+            setCurrData={setCurrData}
           />
         </>
       )}
       {isAdding && (
         <Add
-          // news={news}
           apiNews={apiNews}
-          // setNews={setNews}
           setIsAdding={setIsAdding}
         />
       )}
       {isEditing && (
         <Edit
-          news={news}
-          selectedEmployee={selectedEmployee}
-          setNews={setNews}
+          apiNews={apiNews}
           setIsEditing={setIsEditing}
+          currData={currData}
         />
       )}
     </div>

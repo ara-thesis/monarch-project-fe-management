@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 
 // const Table = ({ news, handleEdit, handleDelete }) => {
-const Table = ({ apiNews, handleEdit, handleDelete }) => {
+const Table = ({ apiNews, setIsEditing, handleDelete, setCurrData }) => {
 
   // let newsList = [];
   const [newsList = [], newsListHook] = useState();
@@ -57,7 +57,10 @@ const Table = ({ apiNews, handleEdit, handleDelete }) => {
                 {/* <img id="target" src={Add.state.s}/> */}
                 <td className="text-right">
                   <button
-                    onClick={() => handleEdit(EditNews.id)}
+                    onClick={() => {
+                      setIsEditing(true);
+                      setCurrData(EditNews)
+                    }}
                     className="button muted-button"
                   >
                     Edit

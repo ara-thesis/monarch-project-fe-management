@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-// const Add = ({ news, setNews, setIsAdding }) => {
 const Add = ({ apiNews, setIsAdding }) => {
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState("true");
-  const [message, setMessage] = useState('');
-  // const [date, setDate] = useState(Date.now());
+  const [article, setArticle] = useState('');
   const [selectedImage, setSelectedImage] = useState();
 
-  
   const styles = {
     container: {
       display: "flex",
@@ -33,7 +30,6 @@ const Add = ({ apiNews, setIsAdding }) => {
     },
   };
 
-  
   //function ini dipanggil ketika file akan diganti/di change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -49,16 +45,7 @@ const Add = ({ apiNews, setIsAdding }) => {
   const handleAdd = e => {
     e.preventDefault();
 
-    // if (!title || !status || !message || !date || !selectedImage) {
-    //   return Swal.fire({
-    //     icon: 'error',
-    //     title: 'Error!',
-    //     text: 'All fields are required.',
-    //     showConfirmButton: true,
-    //   });
-    // }
-
-    if (!title || !status || !message || !selectedImage) {
+    if (!title || !status || !article || !selectedImage) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -67,24 +54,11 @@ const Add = ({ apiNews, setIsAdding }) => {
       });
     }
 
-    // const id = news.length + 1;
-    // const newNews = {
-      // id,
-      // title,
-      // status,
-      // message,
-      // date,
-      // selectedImage,
-    // };
-
-    // news.push(newNews);
-    // localStorage.setItem('employees_data', JSON.stringify(news));
-    // setNews(news);
     setIsAdding(false);
 
     apiNews.post('/news', {
       title: title,
-      article: message,
+      article: article,
       status: status,
       image: selectedImage
     }, {
@@ -103,7 +77,7 @@ const Add = ({ apiNews, setIsAdding }) => {
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
-        <h1>Add Employee</h1>
+        <h1>Add News</h1>
         <label htmlFor="title">Title</label>
         <input
           id="title"
@@ -136,13 +110,8 @@ const Add = ({ apiNews, setIsAdding }) => {
             marginLeft:"20px",
           }}
         >
-          {/* <option placeholder="Status">Status</option>
-          <option value="Shared">Shared</option>
-          <option value="Not Shared">Not Shared</option> */}
-          
           <option value={true}>Active</option>
           <option value={false}>Inactive</option>
-
         </select>
 
         <label htmlFor="message">Message</label>
@@ -150,22 +119,13 @@ const Add = ({ apiNews, setIsAdding }) => {
           id="message"
           type="text"
           name="message"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
+          value={article}
+          onChange={e => setArticle(e.target.value)}
           style={{"1px solid red" : ".5px solid rgba(128, 128, 128, 0.555)"}}
           cols="100" 
           rows="18"
           placeholder="Tulis berita anda"
         ></textarea>
-        {/* <label htmlFor="date">Date</label>
-        <input
-          id="date"
-          type="date"
-          name="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-        /> */}
-        {/* <> */}
 
         <div style={styles.container}>
           <input
@@ -195,7 +155,6 @@ const Add = ({ apiNews, setIsAdding }) => {
             </div>
           )}
         </div>
-          {/* </> */}
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Add" />
           <input
