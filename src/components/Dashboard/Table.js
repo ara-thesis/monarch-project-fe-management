@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import Add from './Add';
 
-const Table = ({ news, handleEdit, handleDelete }) => {
-  news.forEach((EditNews, i) => {
-    EditNews.id = i + 1;
-  });
+
+// const Table = ({ news, handleEdit, handleDelete }) => {
+const Table = ({ apiNews, handleEdit, handleDelete }) => {
+
+  // let newsList = [];
+  const [newsList = [], newsListHook] = useState();
+
+  useEffect(() => {
+
+    const fetchProcess = async () => {
+      const resp = await apiNews.get('/news/list/admin');
+      newsListHook(() => resp.data.data);
+    };
+    fetchProcess();
+    
+  }, [apiNews, newsList]);
+
+  // news.forEach((EditNews, i) => {
+  //   EditNews.id = i + 1;
+  // });
 
   // const formatter = new Intl.NumberFormat('en-US', {
   //   style: 'currency',
@@ -20,23 +36,24 @@ const Table = ({ news, handleEdit, handleDelete }) => {
             <th>No.</th>
             <th>Title</th>
             <th>Status</th>
-            <th>News</th>
-            <th>Date</th>
-            <th>Image</th>
+            {/* <th>News</th> */}
+            {/* <th>Date</th> */}
+            {/* <th>Image</th> */}
             <th colSpan={2} className="text-center">
               Actions
             </th>
           </tr>
         </thead>
         <tbody>
-          {news.length > 0 ? (
-            news.map((EditNews, i) => (
+          {newsList.length > 0 ? (
+            newsList.map((EditNews, i) => (
               <tr key={EditNews.id}>
                 <td>{i + 1}</td>
+                {/* <td>{EditNews.id}</td> */}
                 <td>{EditNews.title}</td>
                 <td>{EditNews.status}</td>
-                <td>{EditNews.message}</td>
-                <td>{EditNews.date} </td>
+                {/* <td>{EditNews.message}</td> */}
+                {/* <td>{EditNews.date} </td> */}
                 {/* <img id="target" src={Add.state.s}/> */}
                 <td className="text-right">
                   <button

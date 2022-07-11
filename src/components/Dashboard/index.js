@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 import Header from './Header';
 import Table from './Table';
@@ -19,6 +20,15 @@ const Dashboard = ({ setIsAuthenticated }) => {
     if (data !== null && Object.keys(data).length !== 0) setNews(data);
   }, []);
 
+  const apiNews = axios.create({
+    baseURL: "http://172.22.56.135:8000/api",
+    timeout: 0,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${localStorage.getItem("token")}`
+    },
+  })
+
   const handleEdit = id => {
     const [Editnews] = news.filter(news => Editnews.id === id);
 
@@ -36,19 +46,29 @@ const Dashboard = ({ setIsAuthenticated }) => {
       cancelButtonText: 'No, cancel!',
     }).then(result => {
       if (result.value) {
-        const [Editnews] = news.filter(Editnews => Editnews.id === id);
+        // const [Editnews] = news.filter(Editnews => Editnews.id === id);
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Deleted!',
-          text: `${Editnews.title}'s data has been deleted.`,
-          showConfirmButton: false,
-          timer: 1500,
+        apiNews.delete(`news/${id}`).then(resp => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: `data has been deleted.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
 
-        const newsCopy = news.filter(Editnews => Editnews.id !== id);
-        localStorage.setItem('employees_data', JSON.stringify(newsCopy));
-        setNews(newsCopy);
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Deleted!',
+        //   text: `${Editnews.title}'s data has been deleted.`,
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
+
+        // const newsCopy = news.filter(Editnews => Editnews.id !== id);
+        // localStorage.setItem('employees_data', JSON.stringify(newsCopy));
+        // setNews(newsCopy);
       }
     });
   };
@@ -62,7 +82,8 @@ const Dashboard = ({ setIsAuthenticated }) => {
             setIsAuthenticated={setIsAuthenticated}
           />
           <Table
-            news={news}
+            apiNews={apiNews}
+            // news={news}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
           />
@@ -70,8 +91,9 @@ const Dashboard = ({ setIsAuthenticated }) => {
       )}
       {isAdding && (
         <Add
-          news={news}
-          setNews={setNews}
+          // news={news}
+          apiNews={apiNews}
+          // setNews={setNews}
           setIsAdding={setIsAdding}
         />
       )}
