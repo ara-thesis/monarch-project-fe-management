@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-import Logout from '../Logout';
+function Header({ setIsAdding, setIsAuthenticated }) {
+    return (<header>
+        <h3>
+            News Management
+        </h3>
 
-const Header = ({ setIsAdding, setIsAuthenticated }) => {
-  return (
-    <header>
-      <h3>News Management</h3>
-      <div style={{ marginTop: '30px', marginBottom: '18px' }}>
-        <button onClick={() => setIsAdding(true)}>Add News</button>
-        <Logout setIsAuthenticated={setIsAuthenticated} />
-      </div>
-    </header>
-  );
-};
+        <div style={{ marginTop: '30px', marginBottom: '18px' }}>
+            <button onClick={() => setIsAdding(true)}>
+                Add News
+            </button>
+        </div>
+    </header>)
+}
 
-export default Header;
+export default Header

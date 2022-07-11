@@ -1,75 +1,115 @@
-import React, { useEffect, useState } from 'react';
-// import Add from './Add';
+import React, { useEffect, useState } from 'react'
+// Import Add from './Add';
 
+// Const Table = ({ news, handleEdit, handleDelete }) => {
+function Table({ apiNews, setIsEditing, handleDelete, setCurrData }) {
+  // Let newsList = [];
+  const [
+    newsList = [],
+    newsListHook
+  ] = useState()
 
-// const Table = ({ news, handleEdit, handleDelete }) => {
-const Table = ({ apiNews, setIsEditing, handleDelete, setCurrData }) => {
+  useEffect(
+    () => {
+      const fetchProcess = async () => {
+        try {
+          const resp = await apiNews.get('/news/list/admin')
+          if (resp.data.data[0] !== null) newsListHook(resp.data.data)
+          else newsListHook([])
+        } catch (err) {
+          if (err.request.status === 403) {
+            alert('ACCESS UNAUTHORIZED')
+          }
+        }
+      }
+      fetchProcess()
+    },
+    [
+      apiNews,
+      newsList
+    ]
+  )
 
-  // let newsList = [];
-  const [newsList = [], newsListHook] = useState();
+  /*
+   * News.forEach((EditNews, i) => {
+   *   EditNews.id = i + 1;
+   * });
+   */
 
-  useEffect(() => {
-
-    const fetchProcess = async () => {
-      const resp = await apiNews.get('/news/list/admin');
-      newsListHook(() => resp.data.data);
-    };
-    fetchProcess();
-    
-  }, [apiNews, newsList]);
-
-  // news.forEach((EditNews, i) => {
-  //   EditNews.id = i + 1;
-  // });
-
-  // const formatter = new Intl.NumberFormat('en-US', {
-  //   style: 'currency',
-  //   currency: 'USD',
-  //   minimumFractionDigits: null,
-  // });
+  /*
+   * Const formatter = new Intl.NumberFormat('en-US', {
+   *   style: 'currency',
+   *   currency: 'USD',
+   *   minimumFractionDigits: null,
+   * });
+   */
 
   return (
     <div className="contain-table">
       <table className="striped-table">
         <thead>
           <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Status</th>
-            {/* <th>News</th> */}
-            {/* <th>Date</th> */}
-            {/* <th>Image</th> */}
-            <th colSpan={2} className="text-center">
+            <th>
+              No.
+            </th>
+
+            <th>
+              Title
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th
+              className="text-center"
+              colSpan={2}
+            >
               Actions
             </th>
           </tr>
         </thead>
+
         <tbody>
           {newsList.length > 0 ? (
             newsList.map((EditNews, i) => (
               <tr key={EditNews.id}>
-                <td>{i + 1}</td>
+                <td>
+                  {i + 1}
+                </td>
+
                 {/* <td>{EditNews.id}</td> */}
-                <td>{EditNews.title}</td>
-                <td>{EditNews.status}</td>
+
+                <td>
+                  {EditNews.title}
+                </td>
+
+                <td>
+                  {EditNews.status}
+                </td>
+
                 {/* <td>{EditNews.message}</td> */}
+
                 {/* <td>{EditNews.date} </td> */}
+
                 {/* <img id="target" src={Add.state.s}/> */}
+
                 <td className="text-right">
                   <button
+                    className="button muted-button"
                     onClick={() => {
-                      setIsEditing(true);
+                      setIsEditing(true)
                       setCurrData(EditNews)
                     }}
-                    className="button muted-button"
                   >
                     Edit
                   </button>
                 </td>
+
                 <td className="text-left">
                   <button
-                    onClick={() => handleDelete(EditNews.id)}
                     className="button muted-button"
+                    onClick={() => handleDelete(EditNews.id)}
                   >
                     Delete
                   </button>
@@ -78,13 +118,15 @@ const Table = ({ apiNews, setIsEditing, handleDelete, setCurrData }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={7}>No News</td>
+              <td colSpan={7}>
+                No News
+              </td>
             </tr>
           )}
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

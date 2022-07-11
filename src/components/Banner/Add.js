@@ -1,39 +1,56 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
 function Add({ apiNews, setIsAdding }) {
-  const [title, setTitle] = useState('')
-  const [status, setStatus] = useState('true')
-  const [article, setArticle] = useState('')
-  const [selectedImage, setSelectedImage] = useState()
+  const [
+    title,
+    setTitle
+  ] = useState('')
+  const [
+    status,
+    setStatus
+  ] = useState('true')
+  const [
+    detail,
+    setDetail
+  ] = useState('')
+  const [
+    selectedImage,
+    setSelectedImage
+  ] = useState()
 
   const styles = {
     container: {
+      alignItems: 'center',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center',
       paddingTop: 50
     },
-    preview: {
-      marginTop: 50,
-      display: 'flex',
-      flexDirection: 'column'
-    },
-    image: { maxWidth: '100%', maxHeight: 320 },
     delete: {
-      cursor: 'pointer',
-      padding: 15,
       background: 'red',
+      border: 'none',
       color: 'white',
-      border: 'none'
+      cursor: 'pointer',
+      padding: 15
+    },
+    image: {
+      maxHeight: 320,
+      maxWidth: '100%'
+    },
+    preview: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: 50
     }
   }
 
   //  Function ini dipanggil ketika file akan diganti/di change
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0])
+  const imageChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedImage(event.target.files[0])
     }
   }
 
@@ -42,27 +59,28 @@ function Add({ apiNews, setIsAdding }) {
     setSelectedImage()
   }
 
-  const handleAdd = (e) => {
-    e.preventDefault()
+  // eslint-disable-next-line consistent-return
+  const handleAdd = (event) => {
+    event.preventDefault()
 
-    if (!title || !status || !article || !selectedImage) {
+    if (!title || !status || !detail || !selectedImage) {
       return Swal.fire({
         icon: 'error',
-        title: 'Error!',
+        showConfirmButton: true,
         text: 'All fields are required.',
-        showConfirmButton: true
+        title: 'Error!'
       })
     }
 
     setIsAdding(false)
 
     apiNews.post(
-      '/news',
+      '/banner',
       {
-        title,
-        article,
+        detail,
+        image: selectedImage,
         status,
-        image: selectedImage
+        title
       },
       {
         'Content-Type': 'multipart/form-data'
@@ -71,19 +89,19 @@ function Add({ apiNews, setIsAdding }) {
 
     Swal.fire({
       icon: 'success',
-      title: 'Added!',
-      text: `${title} ${status}'s data has been Added.`,
       showConfirmButton: false,
-      timer: 1500
+      text: `${title} ${status}'s data has been Added.`,
+      timer: 1500,
+      title: 'Added!'
     })
   }
 
   return (
     <div className="small-container">
-      <h3>
-        Add News
-      </h3>
       <form onSubmit={handleAdd}>
+        <h1>
+          Add Banner
+        </h1>
 
         <label htmlFor="title">
           Title
@@ -92,14 +110,14 @@ function Add({ apiNews, setIsAdding }) {
         <input
           id="title"
           name="title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
           style={{
-            width: '100%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
+            marginBottom: '40px',
             paddingBottom: '6px',
+            paddingLeft: '8px',
             paddingRight: '6px',
-            marginBottom: '40px'
+            paddingTop: '6px',
+            width: '100%'
           }}
           type="text"
           value={title}
@@ -112,14 +130,14 @@ function Add({ apiNews, setIsAdding }) {
         <select
           id="status"
           name="status"
-          onChange={(e) => setStatus(e.target.value)}
+          onChange={(event) => setStatus(event.target.value)}
           style={{
-            width: '50%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
+            marginLeft: '20px',
             paddingBottom: '6px',
+            paddingLeft: '8px',
             paddingRight: '6px',
-            marginLeft: '20px'
+            paddingTop: '6px',
+            width: '50%'
           }}
           type="text"
           value={status}
@@ -133,33 +151,32 @@ function Add({ apiNews, setIsAdding }) {
           </option>
         </select>
 
-        <label htmlFor="article">
-          Article
+        <label htmlFor="description">
+          Description
         </label>
 
         <textarea
           cols="100"
-          id="article"
-          name="article"
-          onChange={(e) => setArticle(e.target.value)}
-          placeholder="Tulis berita anda"
+          id="description"
+          name="description"
+          onChange={(event) => setDetail(event.target.value)}
+          placeholder="Tulis deskripsi banner anda"
           rows="18"
           style={{ '1px solid red': '.5px solid rgba(128, 128, 128, 0.555)' }}
           type="text"
-          value={article}
+          value={detail}
         />
-
         <div style={styles.container}>
           <input
             accept="image/*"
             onChange={imageChange}
             style={{
-              width: '30%',
-              paddingLeft: '8px',
-              paddingTop: '6px',
+              marginTop: '20px',
               paddingBottom: '6px',
+              paddingLeft: '8px',
               paddingRight: '6px',
-              marginTop: '20px'
+              paddingTop: '6px',
+              width: '30%'
             }}
             type="file"
           />

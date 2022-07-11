@@ -1,26 +1,34 @@
 export const SidebarData = [
 
-{
-    name: "Dashboard",
-    route: '/dashboard',
-},
-{
-    name: "Place Info",
-    route: '/PlaceInfo'
-},
-{
-    name: "News Manager",
+  {
+    name: 'Dashboard',
+    route: '/Dashboard'
+  },
+  {
+    name: 'Place Info',
+    route: '/Placeinfo'
+  },
+  {
+    name: 'News Manager',
     route: '/News'
-},
-{
-    name: "Ticketing",
+  },
+  {
+    name: 'Ticketing',
     route: '/Ticketing'
-},
-{
-    name: "Banner",
+  },
+  {
+    name: 'Banner',
     route: '/Banner'
-},
+  },
+  {
+    name: 'Payment Confirmation',
+    route: '/Payconfm'
+  },
+  {
+    name: 'Withdrawal Confirmation',
+    route: '/Withdconfm'
+  }
 
-];
+]
 
-export default SidebarData;
+export default SidebarData

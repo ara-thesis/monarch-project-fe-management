@@ -5,8 +5,8 @@ const newsData = [
     status: 'Not Shared',
     message: 'Messi liburan ke bandung wkwkwkwkkwkwkwkwkwkwkwk',
     date: '2019-04-11',
-    Image:''
-  },
-];
+    Image: ''
+  }
+]
 
-export { newsData };
+export { newsData }

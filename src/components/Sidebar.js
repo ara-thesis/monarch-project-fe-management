@@ -1,62 +1,71 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import SidebarData from "./SidebarData"; //npm install --save styled-components
-import {Link} from "react-router-dom";
+import SidebarData from './SidebarData' // Npm install --save styled-components
+import { Link } from 'react-router-dom'
 
-function Sidebar(props, {defaultActive,}) {
-    const location = props.history.location;
-    const lastActiveIndexString = localStorage.getItem("lastActiveIndex");
-    const lastActiveIndex = Number(lastActiveIndexString);
-    const [activeIndex, setActiveIndex] = useState(lastActiveIndex || defaultActive);
+function Sidebar(props, { defaultActive }) {
+  const { location } = props.history
+  const lastActiveIndexString = localStorage.getItem('lastActiveIndex')
+  const lastActiveIndex = Number(lastActiveIndexString)
+  const [
+    activeIndex,
+    setActiveIndex
+  ] = useState(lastActiveIndex || defaultActive)
 
-    function changeActiveIndex(newIndex) {
-        localStorage.setItem("lastActiveIndex", newIndex)
-        setActiveIndex(newIndex)
+  function changeActiveIndex(newIndex) {
+    localStorage.setItem(
+      'lastActiveIndex',
+      newIndex
+    )
+    setActiveIndex(newIndex)
+  }
+
+  function getPath(path) {
+    if (path.charAt(0) !== '/') {
+      return `/${path}`
     }
+    return path
+  }
 
-    function getPath(path) {
-        if (path.charAt(0) !== "/") {
-            return  "/" + path;
+  useEffect(
+    () => {
+      const activeItem = SidebarData.findIndex((item) => getPath(item.route) === getPath(location.pathname))
+      changeActiveIndex(activeItem)
+    },
+    [location]
+  )
+
+  return (
+    <SidebarParent>
+      <div style={{ position: 'fixed' }}>
+        {
+          SidebarData.map((item, index) => (
+            <Link to={item.route}>
+              <SidebarItem
+                active={index === activeIndex}
+                key={item.name}
+              >
+                <p>
+                  {item.name}
+                </p>
+              </SidebarItem>
+            </Link>
+          ))
         }
-        return path;
-    }
 
-    useEffect(()=> {
-        const activeItem = SidebarData.findIndex(item=> getPath(item.route) === getPath(location.pathname))
-        changeActiveIndex(activeItem);
-    }, [location])
+      </div>
 
-    return (
-        <>
-            <SidebarParent>
-                <div style={{position: 'fixed'}}>
-                    {
-                        SidebarData.map((item, index)=> {
-                            return (
-                                <Link to={item.route}>
-                                    <SidebarItem key={item.name}
-                                                 active={index === activeIndex}
-                                    >
-                                        <p>{item.name}</p>
-                                    </SidebarItem>
-                                </Link>
-                            );
-                        })
-                    }
+      <div className="behind-the-scenes" />
 
-                </div>
-                <div className="behind-the-scenes"/>
-
-                <span className="block-example border-right border-dark"></span>
-            </SidebarParent>
-        </>
-    );
+      <span className="block-example border-right border-dark" />
+    </SidebarParent>
+  )
 }
 
-export default Sidebar;
+export default Sidebar
 
 const SidebarParent = styled.div`
-  background: #F4FDFF;
+  background: #C2C2C2;
   border: solid 1px black;
   padding-top: 20px;
   
@@ -73,12 +82,12 @@ const SidebarParent = styled.div`
     width: 200px;
     
   }
-`;
+`
 
 const SidebarItem = styled.div`
   padding: 16px 24px;
   transition: all 0.25s ease-in-out;
-  background: ${props => props.active ? "#F4FDFF" : ""};
+  background: ${(props) => (props.active ? '#F5F5F5' : '')};
   margin: 4px 12px;
   border-radius: 4px;
 
@@ -90,10 +99,12 @@ const SidebarItem = styled.div`
   
   &:hover {
     cursor:pointer;
-    background-color: yellow;
+    background-color: #F7ADAD;
   }
   
   &:hover:not(:first-child) {
     background: #c34a36;
   }
-`;
+
+  &:clicked
+`

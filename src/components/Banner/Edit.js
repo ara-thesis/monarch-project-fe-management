@@ -1,11 +1,31 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
-function Add({ apiNews, setIsAdding }) {
-  const [title, setTitle] = useState('')
-  const [status, setStatus] = useState('true')
-  const [article, setArticle] = useState('')
-  const [selectedImage, setSelectedImage] = useState()
+function Edit({ apiNews, setIsEditing, currData }) {
+  const [
+    title,
+    setTitle
+  ] = useState(currData.title)
+  const [
+    status,
+    setStatus
+  ] = useState(currData.status)
+  const [
+    detail,
+    setDetail
+  ] = useState(currData.article)
+  const [
+    oldImage,
+    setOldImage
+  ] = useState(currData.image)
+  const [
+    selectedImage,
+    setSelectedImage
+  ] = useState()
+  const [
+    pageStart,
+    setPageStart
+  ] = useState(true)
 
   const styles = {
     container: {
@@ -30,37 +50,30 @@ function Add({ apiNews, setIsAdding }) {
     }
   }
 
-  //  Function ini dipanggil ketika file akan diganti/di change
+  // Function ini dipanggil ketika file akan diganti/di change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0])
+      setPageStart(false)
     }
   }
 
-  //  Function ini dipanggil ketika file akan dihapus
+  // Function ini dipanggil ketika file akan dihapus
   const removeSelectedImage = () => {
     setSelectedImage()
+    setPageStart(false)
   }
 
-  const handleAdd = (e) => {
+  const handleEdit = (e) => {
     e.preventDefault()
 
-    if (!title || !status || !article || !selectedImage) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'All fields are required.',
-        showConfirmButton: true
-      })
-    }
+    setIsEditing(false)
 
-    setIsAdding(false)
-
-    apiNews.post(
-      '/news',
+    apiNews.put(
+      `/banner/${currData.id}`,
       {
         title,
-        article,
+        detail,
         status,
         image: selectedImage
       },
@@ -78,12 +91,16 @@ function Add({ apiNews, setIsAdding }) {
     })
   }
 
+  const removePrevImg = () => {
+    setOldImage()
+  }
+
   return (
     <div className="small-container">
-      <h3>
-        Add News
-      </h3>
-      <form onSubmit={handleAdd}>
+      <form onSubmit={handleEdit}>
+        <h1>
+          Edit Banner
+        </h1>
 
         <label htmlFor="title">
           Title
@@ -133,20 +150,20 @@ function Add({ apiNews, setIsAdding }) {
           </option>
         </select>
 
-        <label htmlFor="article">
-          Article
+        <label htmlFor="description">
+          Description
         </label>
 
         <textarea
           cols="100"
-          id="article"
-          name="article"
-          onChange={(e) => setArticle(e.target.value)}
+          id="description"
+          name="description"
+          onChange={(e) => setDetail(e.target.value)}
           placeholder="Tulis berita anda"
           rows="18"
           style={{ '1px solid red': '.5px solid rgba(128, 128, 128, 0.555)' }}
           type="text"
-          value={article}
+          value={detail}
         />
 
         <div style={styles.container}>
@@ -164,10 +181,27 @@ function Add({ apiNews, setIsAdding }) {
             type="file"
           />
 
+          {pageStart
+            ? <div style={styles.preview}>
+              <img
+                alt="news pics"
+                src={oldImage}
+                style={styles.image}
+              />
+
+              <button
+                onClick={removePrevImg}
+                style={styles.delete}
+              >
+                Remove This Image
+              </button>
+            </div>
+            : null}
+
           {selectedImage
             ? <div style={styles.preview}>
               <img
-                alt="Thumb"
+                alt="news pics"
                 src={URL.createObjectURL(selectedImage)}
                 style={styles.image}
               />
@@ -185,12 +219,12 @@ function Add({ apiNews, setIsAdding }) {
         <div style={{ marginTop: '30px' }}>
           <input
             type="submit"
-            value="Add"
+            value="Update"
           />
 
           <input
             className="muted-button"
-            onClick={() => setIsAdding(false)}
+            onClick={() => setIsEditing(false)}
             style={{ marginLeft: '12px' }}
             type="button"
             value="Cancel"
@@ -201,4 +235,4 @@ function Add({ apiNews, setIsAdding }) {
   )
 }
 
-export default Add
+export default Edit

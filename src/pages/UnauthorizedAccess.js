@@ -1,13 +1,13 @@
 import React from 'react'
 
-function NotFound() {
+function UnauthorizedAccess() {
   return (
     <div className="message">
       <h1>
-        PATH NOT FOUND
+        ACCESS UNAUTHORIZED
       </h1>
     </div>
   )
 }
 
-export default NotFound
+export default UnauthorizedAccess

@@ -1,146 +1,173 @@
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 
-const Add = ({ ticket, setTicket, setIsAdding }) => {
-  const [ticketName, setTicketName] = useState('');
-  const [ticketDetails, setTicketDetails] = useState('');
-  const [ticketPrice, setTicketPrice] = useState('');
+function Add({ ticket, setTicket, setIsAdding }) {
+  const [
+    ticketName,
+    setTicketName
+  ] = useState('')
+  const [
+    ticketDetails,
+    setTicketDetails
+  ] = useState('')
+  const [
+    ticketPrice,
+    setTicketPrice
+  ] = useState('')
 
-  
-  // const styles = {
-  //   container: {
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //     paddingTop: 50,
-  //   },
-  //   preview: {
-  //     marginTop: 50,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //   },
-  //   image: { maxWidth: "100%", maxHeight: 320 },
-  //   delete: {
-  //     cursor: "pointer",
-  //     padding: 15,
-  //     background: "red",
-  //     color: "white",
-  //     border: "none",
-  //   },
+  /*
+   * Const styles = {
+   *   container: {
+   *     display: "flex",
+   *     flexDirection: "column",
+   *     justifyContent: "center",
+   *     alignItems: "center",
+   *     paddingTop: 50,
+   *   },
+   *   preview: {
+   *     marginTop: 50,
+   *     display: "flex",
+   *     flexDirection: "column",
+   *   },
+   *   image: { maxWidth: "100%", maxHeight: 320 },
+   *   delete: {
+   *     cursor: "pointer",
+   *     padding: 15,
+   *     background: "red",
+   *     color: "white",
+   *     border: "none",
+   *   },
+   * };
+   */
+
+  /*
+   *   //function ini dipanggil ketika file akan diganti/di change
+   *   Const imageChange = (e) => {
+   *     If (e.target.files && e.target.files.length > 0) {
+   *       SetSelectedImage(e.target.files[0]);
+   *     }
+   * };
+   */
+
+  // //function ini dipanggil ketika file akan dihapus
+  // Const removeSelectedImage = () => {
+  //     SetSelectedImage();
   // };
 
-  
-          //   //function ini dipanggil ketika file akan diganti/di change
-          //   const imageChange = (e) => {
-          //     if (e.target.files && e.target.files.length > 0) {
-          //       setSelectedImage(e.target.files[0]);
-          //     }
-          // };
-          
-          // //function ini dipanggil ketika file akan dihapus
-          // const removeSelectedImage = () => {
-          //     setSelectedImage();
-          // };
-
-  const handleAdd = e => {
-
-
-    e.preventDefault();
+  const handleAdd = (e) => {
+    e.preventDefault()
 
     if (!ticketName || !ticketDetails || !ticketPrice) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
         text: 'All fields are required.',
-        showConfirmButton: true,
-      });
+        showConfirmButton: true
+      })
     }
 
-    const id = ticket.length + 1;
+    const id = ticket.length + 1
     const newTicket = {
-      //newEmployee
+      // NewEmployee
       id,
       ticketName,
       ticketDetails,
-      ticketPrice,
-    };
+      ticketPrice
+    }
 
-    ticket.push(newTicket);
-    localStorage.setItem('employees_data', JSON.stringify(ticket));
-    setTicket(ticket);
-    setIsAdding(false);
+    ticket.push(newTicket)
+    localStorage.setItem(
+      'employees_data',
+      JSON.stringify(ticket)
+    )
+    setTicket(ticket)
+    setIsAdding(false)
 
     Swal.fire({
       icon: 'success',
       title: 'Added!',
       text: `${ticketName}'s data has been Added.`,
       showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+      timer: 1500
+    })
+  }
 
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
-        <h1>Add Ticket</h1>
-        <label htmlFor="ticketName">Ticket Name</label>
+        <h1>
+          Add Ticket
+        </h1>
+
+        <label htmlFor="ticketName">
+          Ticket Name
+        </label>
+
         <input
           id="ticketName"
-          type="text"
           name="ticketName"
-          value={ticketName}
-          onChange={e => setTicketName(e.target.value)}
+          onChange={(e) => setTicketName(e.target.value)}
           style={{
-            width: "100%",
-            paddingLeft: "8px",
-            paddingTop: "6px",
-            paddingBottom: "6px",
-            paddingRight: "6px",
-            marginBottom:"40px",
-        }}
-        />
-        <label htmlFor="status">Ticket Details</label>
-        <input
-          id="ticketDetails"
+            width: '100%',
+            paddingLeft: '8px',
+            paddingTop: '6px',
+            paddingBottom: '6px',
+            paddingRight: '6px',
+            marginBottom: '40px'
+          }}
           type="text"
-          name="ticketDetails"
-          value={ticketDetails}
-          onChange={e => setTicketDetails(e.target.value)}
-          style={{
-            width: "50%",
-            paddingLeft: "8px",
-            paddingTop: "6px",
-            paddingBottom: "6px",
-            paddingRight: "6px",
-            marginLeft:"20px",
-        }}
+          value={ticketName}
         />
 
-        <label htmlFor="ticketPrice">Ticket Price (IDR)</label>
+        <label htmlFor="status">
+          Ticket Details
+        </label>
+
+        <input
+          id="ticketDetails"
+          name="ticketDetails"
+          onChange={(e) => setTicketDetails(e.target.value)}
+          style={{
+            width: '50%',
+            paddingLeft: '8px',
+            paddingTop: '6px',
+            paddingBottom: '6px',
+            paddingRight: '6px',
+            marginLeft: '20px'
+          }}
+          type="text"
+          value={ticketDetails}
+        />
+
+        <label htmlFor="ticketPrice">
+          Ticket Price (IDR)
+        </label>
+
         <input
           id="ticketPrice"
-          type="number"
           name="salary"
+          onChange={(e) => setTicketPrice(e.target.value)}
+          type="number"
           value={ticketPrice}
-          onChange={e => setTicketPrice(e.target.value)}
         />
 
         <div style={{ marginTop: '30px' }}>
-          <input type="submit" value="Add" />
           <input
-            style={{ marginLeft: '12px' }}
+            type="submit"
+            value="Add"
+          />
+
+          <input
             className="muted-button"
+            onClick={() => setIsAdding(false)}
+            style={{ marginLeft: '12px' }}
             type="button"
             value="Cancel"
-            onClick={() => setIsAdding(false)}
           />
         </div>
       </form>
     </div>
-  );
+  )
+}
 
-  
-};
-
-export default Add;
+export default Add
