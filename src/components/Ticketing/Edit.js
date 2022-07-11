@@ -35,7 +35,7 @@ const Edit = ({ ticket, selectedEmployee, setTicket, setIsEditing }) => {
       }
     }
 
-    localStorage.setItem('employees_data', JSON.stringify(ticket));
+    localStorage.setItem('ticket_data', JSON.stringify(ticket));
     setTicket(ticket);
     setIsEditing(false);
 

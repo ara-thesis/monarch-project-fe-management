@@ -7,41 +7,6 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
   const [ticketPrice, setTicketPrice] = useState('');
 
   
-  // const styles = {
-  //   container: {
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //     paddingTop: 50,
-  //   },
-  //   preview: {
-  //     marginTop: 50,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //   },
-  //   image: { maxWidth: "100%", maxHeight: 320 },
-  //   delete: {
-  //     cursor: "pointer",
-  //     padding: 15,
-  //     background: "red",
-  //     color: "white",
-  //     border: "none",
-  //   },
-  // };
-
-  
-          //   //function ini dipanggil ketika file akan diganti/di change
-          //   const imageChange = (e) => {
-          //     if (e.target.files && e.target.files.length > 0) {
-          //       setSelectedImage(e.target.files[0]);
-          //     }
-          // };
-          
-          // //function ini dipanggil ketika file akan dihapus
-          // const removeSelectedImage = () => {
-          //     setSelectedImage();
-          // };
 
   const handleAdd = e => {
 
@@ -67,7 +32,7 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
     };
 
     ticket.push(newTicket);
-    localStorage.setItem('employees_data', JSON.stringify(ticket));
+    localStorage.setItem('ticket_data', JSON.stringify(ticket));
     setTicket(ticket);
     setIsAdding(false);
 

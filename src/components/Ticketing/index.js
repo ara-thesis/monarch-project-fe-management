@@ -17,7 +17,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('employees_data'));
+    const data = JSON.parse(localStorage.getItem('ticket_data'));
     if (data !== null && Object.keys(data).length !== 0) setTicket(data);
   }, []);
 
@@ -49,7 +49,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
         });
 
         const ticketCopy = ticket.filter(EditTicket => EditTicket.id !== id);
-        localStorage.setItem('employees_data', JSON.stringify(ticketCopy));
+        localStorage.setItem('ticket_data', JSON.stringify(ticketCopy));
         setTicket(ticketCopy);
       }
     });
@@ -70,7 +70,24 @@ const Dashboard = ({ setIsAuthenticated }) => {
           />
         </>
       )}
-       <>
+
+      {isAdding && (
+        <Add
+          ticket={ticket}
+          setTicket={setTicket}
+          setIsAdding={setIsAdding}
+        />
+      )}
+      {isEditing && (
+        <Edit
+          ticket={ticket}
+          selectedEmployee={selectedEmployee}
+          setTicket={setTicket}
+          setIsEditing={setIsEditing}
+        />
+      )}
+
+<>
       <h4 style={{textAlign: 'center'}}>Income</h4>
       <br />
       <CardGroup>
@@ -111,23 +128,9 @@ const Dashboard = ({ setIsAuthenticated }) => {
   </Card>
   </CardGroup>
       </>
-
-      {isAdding && (
-        <Add
-          ticket={ticket}
-          setTicket={setTicket}
-          setIsAdding={setIsAdding}
-        />
-      )}
-      {isEditing && (
-        <Edit
-          ticket={ticket}
-          selectedEmployee={selectedEmployee}
-          setTicket={setTicket}
-          setIsEditing={setIsEditing}
-        />
-      )}
     </div>
+
+    
   );
 };
 

@@ -86,7 +86,7 @@ const Add = ({ news, setNews, setIsAdding }) => {
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
-        <h1>Add Employee</h1>
+        <h1>Add News</h1>
         <label htmlFor="title">Title</label>
         <input
           id="title"

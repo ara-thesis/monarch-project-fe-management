@@ -13,13 +13,13 @@ const Login = ({ setIsAuthenticated }) => {
 
     if (email === adminEmail && password === adminPassword) {
       Swal.fire({
-        timer: 1500,
+        timer: 1500, //timer untuk menutup popup login secara otomatis ketika tidak ada action apa2 dalam 1500 detik
         showConfirmButton: false,
         willOpen: () => {
-          Swal.showLoading();
+          Swal.showLoading(); //ketika dibuka maka menunjukan lingkaran loading
         },
         willClose: () => {
-          localStorage.setItem('is_authenticated', true);
+          localStorage.setItem('is_authenticated', true); //ketika diklik login, maka data akan diambil dari API login
           setIsAuthenticated(true);
 
           Swal.fire({

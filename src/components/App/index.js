@@ -10,7 +10,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import DB from '../../pages/Dashboard'
 import PlaceInfo from '../../pages/PlaceInfo'
 import News from '../Dashboard'
-import Ticketing from '../../components/Ticketing'
+import Ticketing from '../Ticketing'
 import Banner from '../../pages/Banner'
 import Layout from '../Layout';
 
@@ -35,18 +35,19 @@ const App = () => {
               <Layout {...props}>
                   <Switch>
                   {/* <Route path={'/NewsAdd'} component={NewsAdd}/> */}
+                  {isAuthenticated ? (
+
+<News setIsAuthenticated={setIsAuthenticated}/>
+) : (
+<Login setIsAuthenticated={setIsAuthenticated} /> 
+                    )};
                       <Route path="/Dashboard" exact component={DB}/>
                       <Route path="/PlaceInfo" component={PlaceInfo}/>
                       <Route path="/Banner" component={Banner}/>
-
-                      {isAuthenticated ? (
-                      <News setIsAuthenticated={setIsAuthenticated} />
-                      ) : (
-                      <Login setIsAuthenticated={setIsAuthenticated} />
-                      )};
                       <Route path="/News" component={News} />
                       <Route path="/Ticketing" component={Ticketing}/>
                   </Switch>
+
               </Layout>
           )}/>
       </BrowserRouter>
