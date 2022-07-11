@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form'
@@ -15,10 +15,6 @@ import {
   useMapEvents
 } from 'react-leaflet'
 
-// Import { newsData } from '../../data';
-let setStart = true
-let isAuthorized = true
-
 function PlaceInfoDashboard() {
   // const [isAdding, setIsAdding] = useState(false)
   // const [isEditing, setIsEditing] = useState(false)
@@ -31,9 +27,14 @@ function PlaceInfoDashboard() {
   const [placePostal, setPlacePostal] = useState("")
   const [placeLoc_lat, setPlaceLocLat] = useState(0)
   const [placeLoc_long, setPlaceLocLong] = useState(0)
+  const [isStartup, setIsStartup] = useState(true)
+  const [isMapUpdated, setMapUpdated] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(true)
+  const [selectedImages, setSelectedImages] = useState()
 
   const apiPlaceInfo = axios.create({
     baseURL: 'http://172.22.56.135:8000/api',
+    // baseURL: 'http://localhost:8000/api',
     timeout: 0,
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -45,30 +46,36 @@ function PlaceInfoDashboard() {
     const startup = async () => {
       try {
         const fetchPlace = await apiPlaceInfo.get('/placeinfo/show/admin')
-        if (setStart) {
-          const placeData = fetchPlace.data.data[0]
-          if (placeData.place_loc_lat === null && placeData.place_loc_lat === null) {
-            navigator.geolocation.getCurrentPosition(pos => {
-              setPlaceLocLat(pos.coords.latitude)
-              setPlaceLocLong(pos.coords.longitude)
-            })
-          } else {
-            setPlaceLocLat(fetchPlace.data.data[0].place_loc_lat)
-            setPlaceLocLong(fetchPlace.data.data[0].place_loc_long)
+        const placeData = fetchPlace.data.data[0]
+        if (isStartup) {
+          if(placeData !== null){
+            if (placeData.place_loc_lat === null && placeData.place_loc_lat === null) {
+              navigator.geolocation.getCurrentPosition(pos => {
+                setPlaceLocLat(pos.coords.latitude)
+                setPlaceLocLong(pos.coords.longitude)
+              })
+            } else {
+              setPlaceLocLat(fetchPlace.data.data[0].place_loc_lat)
+              setPlaceLocLong(fetchPlace.data.data[0].place_loc_long)
+            }
+            setPlaceName(fetchPlace.data.data[0].place_name)
+            setPlaceCity(fetchPlace.data.data[0].place_city)
+            setPlaceCountry(fetchPlace.data.data[0].place_country)
+            setPlaceInfo(fetchPlace.data.data[0].place_info)
+            setPlaceStreet(fetchPlace.data.data[0].place_street)
+            setStateProv(fetchPlace.data.data[0].place_stateprov)
+            setPlacePostal(fetchPlace.data.data[0].place_postal)
+            console.log("setup done")
           }
-          setPlaceName(fetchPlace.data.data[0].place_name)
-          setPlaceCity(fetchPlace.data.data[0].place_city)
-          setPlaceCountry(fetchPlace.data.data[0].place_country)
-          setPlaceInfo(fetchPlace.data.data[0].place_info)
-          setPlaceStreet(fetchPlace.data.data[0].place_street)
-          setStateProv(fetchPlace.data.data[0].place_stateprov)
-          setPlacePostal(fetchPlace.data.data[0].place_postal)
-          setStart = false
+            
+          setIsStartup(false)
+          setMapUpdated(true)          
         }
       } catch (error) {
-        setStart = false
-        isAuthorized = false
+        console.log(error)
+        setIsAuthorized(false)
       }
+
     }
     startup()
   });
@@ -86,7 +93,8 @@ function PlaceInfoDashboard() {
   const changeData = async (event) => {
     event.preventDefault()
     try {
-      await apiPlaceInfo.put('/api/placeinfo', {
+
+      await apiPlaceInfo.put('/placeinfo', {
         place_name: placeName,
         place_info: placeInfo,
         place_street: placeStreet,
@@ -96,9 +104,12 @@ function PlaceInfoDashboard() {
         place_postal: placePostal,
         place_loc_long: placeLoc_long,
         place_loc_lat: placeLoc_lat,
+        images: selectedImages
       })
+      console.log(selectedImages)
+      console.log("success")
     } catch (error) {
-      console.log(`Error found: ${error}`)
+      console.log(error)
     }
 
   }
@@ -132,7 +143,7 @@ function PlaceInfoDashboard() {
                 onChange={({ target: { value } }) => {
                   setPlaceName(value)
                 }}
-                value={placeName} />
+                defaultValue={placeName} />
 
             </Form.Group>
 
@@ -233,20 +244,24 @@ function PlaceInfoDashboard() {
                 Location
               </Form.Label>
 
-              <MapContainer
-                style={{ height: "200px" }}
-                center={[placeLoc_lat, placeLoc_long]}
-                zoom={13}
-                scrollWheelZoom={true}>
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <LocationFind />
-                <Marker
-                  draggable={false}
-                  position={[placeLoc_lat, placeLoc_long]}>
-                </Marker>
-              </MapContainer>
+              {isMapUpdated ? (
+                <MapContainer
+                  style={{ height: "300px" }}
+                  center={[placeLoc_lat, placeLoc_long]}
+                  zoom={13}
+                  scrollWheelZoom={true}>
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <LocationFind />
+                  <Marker
+                    draggable={false}
+                    position={[placeLoc_lat, placeLoc_long]}>
+                  </Marker>
+                </MapContainer>
+              ) : (
+                <p>Loading map...</p>
+              )}
 
             </Form.Group>
 
@@ -259,7 +274,17 @@ function PlaceInfoDashboard() {
 
               <Form.Control
                 type="file"
-                multiple />
+                multiple
+                onChange={({ target: { files } }) => {
+                  if (files && files.length > 0) {
+                    const fileList = []
+                    for(let i=0;i<files.length;i++){
+                      fileList.push(files[i])
+                    }
+                    setSelectedImages(fileList)
+                  }
+                  
+                }}/>
             </Form.Group>
 
             <Button

@@ -11,7 +11,7 @@ import DB from '../../pages/Dashboard'
 import PlaceInfo from '../Placeinfo'
 import News from '../News'
 import Banner from '../Banner'
-import Ticketing from '../../components/Ticketing'
+import Ticketing from '../Ticketing'
 import Layout from '../Layout'
 
 function App() {

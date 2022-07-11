@@ -19,6 +19,7 @@ function Login() {
 
   const apiLogin = axios.create({
     baseURL: 'http://172.22.56.135:8000/api',
+    // baseURL: 'http://localhost:8000/api',
     timeout: 0,
     headers: {
       'Content-Type': 'multipart/form-data'

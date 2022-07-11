@@ -122,8 +122,7 @@ function Add({ apiNews, setIsAdding }) {
             marginLeft: '20px'
           }}
           type="text"
-          value={status}
-        >
+          value={status}>
           <option value>
             Active
           </option>

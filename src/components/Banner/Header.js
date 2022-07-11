@@ -8,7 +8,12 @@ function Header({ setIsAdding, setIsAuthenticated }) {
       Banner Management
     </h3>
 
-    
+    <div style={{ marginTop: '30px', marginBottom: '18px' }}>
+      <button onClick={() => setIsAdding(true)}>
+        Add Banner
+      </button>
+    </div>
+
   </header>)
 }
 
