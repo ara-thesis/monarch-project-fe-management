@@ -1,46 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from 'react'
-import Swal from 'sweetalert2'
-
-function Add({ ticket, setTicket, setIsAdding }) {
-  const [
-    ticketName,
-    setTicketName
-  ] = useState('')
-  const [
-    ticketDetails,
-    setTicketDetails
-  ] = useState('')
-  const [
-    ticketPrice,
-    setTicketPrice
-  ] = useState('')
-
-  /*
-   * Const styles = {
-   *   container: {
-   *     display: "flex",
-   *     flexDirection: "column",
-   *     justifyContent: "center",
-   *     alignItems: "center",
-   *     paddingTop: 50,
-   *   },
-   *   preview: {
-   *     marginTop: 50,
-   *     display: "flex",
-   *     flexDirection: "column",
-   *   },
-   *   image: { maxWidth: "100%", maxHeight: 320 },
-   *   delete: {
-   *     cursor: "pointer",
-   *     padding: 15,
-   *     background: "red",
-   *     color: "white",
-   *     border: "none",
-   *   },
-   * };
-   */
-=======
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -48,10 +5,7 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
   const [ticketName, setTicketName] = useState('');
   const [ticketDetails, setTicketDetails] = useState('');
   const [ticketPrice, setTicketPrice] = useState('');
-
   
->>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
-
   /*
    *   //function ini dipanggil ketika file akan diganti/di change
    *   Const imageChange = (e) => {
@@ -87,20 +41,10 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
       ticketPrice
     }
 
-<<<<<<< HEAD
-    ticket.push(newTicket)
-    localStorage.setItem(
-      'employees_data',
-      JSON.stringify(ticket)
-    )
-    setTicket(ticket)
-    setIsAdding(false)
-=======
     ticket.push(newTicket);
     localStorage.setItem('ticket_data', JSON.stringify(ticket));
     setTicket(ticket);
     setIsAdding(false);
->>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
     Swal.fire({
       icon: 'success',
