@@ -8,9 +8,11 @@ import Table from './Table';
 import Add from './Add';
 import Edit from './Edit';
 
+import Redeem from './redeem'
+
 import { ticketData } from '../../data/ticket-data';
 
-const Dashboard = ({ setIsAuthenticated }) => {
+const Ticketing = ({ setIsAuthenticated }) => {
   const [ticket, setTicket] = useState(ticketData);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -134,4 +136,4 @@ const Dashboard = ({ setIsAuthenticated }) => {
   );
 };
 
-export default Dashboard;
+export default Ticketing;

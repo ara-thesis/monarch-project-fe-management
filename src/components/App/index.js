@@ -9,7 +9,7 @@ import Login from '../Login';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import DB from '../../pages/Dashboard'
 import PlaceInfo from '../../pages/PlaceInfo'
-import News from '../Dashboard'
+import News from '../News'
 import Ticketing from '../Ticketing'
 import Banner from '../../pages/Banner'
 import Layout from '../Layout';
