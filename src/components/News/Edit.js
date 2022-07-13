@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
 function Edit({ apiNews, setIsEditing, currData }) {
   const [title, setTitle] = useState(currData.title)
   const [status, setStatus] = useState(currData.status)
   const [article, setArticle] = useState(currData.article)
-  const [oldImage, setOldImage] = useState(currData.image)
+  const [oldImage, setOldImage] = useState()
   const [selectedImage, setSelectedImage] = useState()
   const [pageStart, setPageStart] = useState(true)
+  const [firstFetch, setFirstFetch] = useState(true)
 
   const styles = {
     container: {
@@ -70,6 +71,19 @@ function Edit({ apiNews, setIsEditing, currData }) {
     setOldImage()
   }
 
+  useEffect(() => {
+    const fetchNews = async () => {
+      const fetchData = await apiNews.get(`/news/${currData.id}`)
+      if (fetchData.data.data[0] !== null) {
+        setTitle(fetchData.data.data[0].title)
+        setStatus(fetchData.data.data[0].status)
+        setArticle(fetchData.data.data[0].article)
+        setOldImage(`http://172.22.56.135:8000${fetchData.data.data[0].image}`)
+      }
+    }
+    fetchNews()
+  }, [apiNews, currData.id, firstFetch])
+
   return (
     <div className="small-container">
       <form onSubmit={handleEdit}>
@@ -86,7 +100,7 @@ function Edit({ apiNews, setIsEditing, currData }) {
           name="title"
           onChange={(e) => setTitle(e.target.value)}
           style={{
-            width: '100%',
+            width: '80%',
             paddingLeft: '8px',
             paddingTop: '6px',
             paddingBottom: '6px',
@@ -105,12 +119,11 @@ function Edit({ apiNews, setIsEditing, currData }) {
           name="status"
           onChange={(e) => setStatus(e.target.value)}
           style={{
-            width: '50%',
+            width: '25%',
             paddingLeft: '8px',
             paddingTop: '6px',
             paddingBottom: '6px',
             paddingRight: '6px',
-            marginLeft: '20px'
           }}
           type="text"
           value={status}>
@@ -153,25 +166,23 @@ function Edit({ apiNews, setIsEditing, currData }) {
             }}
             type="file" />
 
-          {pageStart
-            ? <div style={styles.preview}>
+          {pageStart && (
+            <div style={styles.preview}>
               <img
                 alt="news pics"
                 src={oldImage}
-                style={styles.image}
-              />
+                style={styles.image} />
 
               <button
                 onClick={removePrevImg}
-                style={styles.delete}
-              >
+                style={styles.delete} >
                 Remove This Image
               </button>
             </div>
-            : null}
+          )}
 
-          {selectedImage
-            ? <div style={styles.preview}>
+          {selectedImage && (
+            <div style={styles.preview}>
               <img
                 alt="news pics"
                 src={URL.createObjectURL(selectedImage)}
@@ -180,27 +191,23 @@ function Edit({ apiNews, setIsEditing, currData }) {
 
               <button
                 onClick={removeSelectedImage}
-                style={styles.delete}
-              >
+                style={styles.delete} >
                 Remove This Image
               </button>
             </div>
-            : null}
+          )}
         </div>
 
         <div style={{ marginTop: '30px' }}>
           <input
             type="submit"
-            value="Update"
-          />
-
+            value="Update" />
           <input
             className="muted-button"
             onClick={() => setIsEditing(false)}
             style={{ marginLeft: '12px' }}
             type="button"
-            value="Cancel"
-          />
+            value="Cancel" />
         </div>
       </form>
     </div>
