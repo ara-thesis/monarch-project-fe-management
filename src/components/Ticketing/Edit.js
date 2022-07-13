@@ -48,12 +48,18 @@ function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
       }
     }
 
+<<<<<<< HEAD
     localStorage.setItem(
       'employees_data',
       JSON.stringify(ticket)
     )
     setTicket(ticket)
     setIsEditing(false)
+=======
+    localStorage.setItem('ticket_data', JSON.stringify(ticket));
+    setTicket(ticket);
+    setIsEditing(false);
+>>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
     Swal.fire({
       icon: 'success',

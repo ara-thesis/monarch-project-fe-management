@@ -45,7 +45,7 @@ function Login() {
 
       // Success message
       Swal.fire({
-        timer: 1500,
+        timer: 1500, //timer untuk menutup popup login secara otomatis ketika tidak ada action apa2 dalam 1500 detik
         showConfirmButton: false,
         willOpen: () => {
           Swal.showLoading()

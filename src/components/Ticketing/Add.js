@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -39,6 +40,17 @@ function Add({ ticket, setTicket, setIsAdding }) {
    *   },
    * };
    */
+=======
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+
+const Add = ({ ticket, setTicket, setIsAdding }) => {
+  const [ticketName, setTicketName] = useState('');
+  const [ticketDetails, setTicketDetails] = useState('');
+  const [ticketPrice, setTicketPrice] = useState('');
+
+  
+>>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
   /*
    *   //function ini dipanggil ketika file akan diganti/di change
@@ -75,6 +87,7 @@ function Add({ ticket, setTicket, setIsAdding }) {
       ticketPrice
     }
 
+<<<<<<< HEAD
     ticket.push(newTicket)
     localStorage.setItem(
       'employees_data',
@@ -82,6 +95,12 @@ function Add({ ticket, setTicket, setIsAdding }) {
     )
     setTicket(ticket)
     setIsAdding(false)
+=======
+    ticket.push(newTicket);
+    localStorage.setItem('ticket_data', JSON.stringify(ticket));
+    setTicket(ticket);
+    setIsAdding(false);
+>>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
     Swal.fire({
       icon: 'success',

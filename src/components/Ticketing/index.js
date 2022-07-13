@@ -9,6 +9,7 @@ import TableTicketList from './TableTicketList'
 import TableTicketDashboard from './TableTicketDashboard'
 import Add from './Add'
 import Edit from './Edit'
+import Redeem from './redeem'
 
 import { ticketData } from '../../data/ticket-data'
 
@@ -52,12 +53,9 @@ function TicketDashboard() {
           timer: 1500
         })
 
-        const ticketCopy = ticket.filter((EditTicket) => EditTicket.id !== id)
-        localStorage.setItem(
-          'employees_data',
-          JSON.stringify(ticketCopy)
-        )
-        setTicket(ticketCopy)
+        const ticketCopy = ticket.filter(EditTicket => EditTicket.id !== id);
+        localStorage.setItem('ticket_data', JSON.stringify(ticketCopy));
+        setTicket(ticketCopy);
       }
     })
   }
