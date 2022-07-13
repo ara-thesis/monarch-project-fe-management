@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 // Import Add from './Add';
 
-function TableTicketList({ apiTicket, handleEdit, handleDelete, setIsAuthorized }) {
+function TableTicketList({ apiTicket, setIsEditing, setCurrData, setIsAuthorized }) {
   const [ticketList = [], ticketListHook] = useState()
+
+  const formatter = new Intl.NumberFormat('en-US',
+    {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: null
+    }
+  )
 
   const fetchProcess = async () => {
     try {
@@ -19,13 +28,42 @@ function TableTicketList({ apiTicket, handleEdit, handleDelete, setIsAuthorized 
     }
   }
 
-  const formatter = new Intl.NumberFormat('en-US',
-    {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: null
-    }
-  )
+  const handleEdit = data => {
+    setIsEditing(true)
+    setCurrData(data)
+  }
+
+  const handleDelete = id => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!'
+    }).then(async (result) => {
+      if (result.value) {
+        apiTicket.delete(`/ticket/${id}`)
+          .then(reponse => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: `Ticket data has been deleted.`,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+          .catch(error => {
+            if (error.response.data.message.includes('violates foreign key constraint'))
+              Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Cannot delete ticket that still in used by user'
+              })
+          })
+      }
+    })
+  }
 
   useEffect(() => {
     fetchProcess()
@@ -55,7 +93,6 @@ function TableTicketList({ apiTicket, handleEdit, handleDelete, setIsAuthorized 
             </th>
           </tr>
         </thead>
-
         <tbody>
           {ticketList.length > 0 ? (
             ticketList.map((EditTicket, i) => (
@@ -75,7 +112,7 @@ function TableTicketList({ apiTicket, handleEdit, handleDelete, setIsAuthorized 
                 <td className="text-right">
                   <button
                     className="button muted-button"
-                    onClick={() => handleEdit(EditTicket.id)}>
+                    onClick={() => handleEdit(EditTicket)}>
                     Edit
                   </button>
                 </td>

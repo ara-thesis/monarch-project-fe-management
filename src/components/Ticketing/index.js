@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Swal from 'sweetalert2'
-import { Button, Card, Col, Row } from 'react-bootstrap'
-import CardGroup from 'react-bootstrap/CardGroup'
 import axios from 'axios'
 
 import Header from './Header'
@@ -9,15 +6,14 @@ import TableTicketList from './TableTicketList'
 import TableTicketDashboard from './TableTicketDashboard'
 import Add from './Add'
 import Edit from './Edit'
-import Redeem from './redeem'
+// import Redeem from './redeem'
 
-import { ticketData } from '../../data/ticket-data'
 
 function TicketDashboard() {
-  const [ticket, setTicket] = useState(ticketData)
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [isAuthorized, setIsAuthorized] = useState(true)
+  const [currData, setCurrData] = useState()
 
   const apiTicket = axios.create({
     baseURL: 'http://172.22.56.135:8000/api',
@@ -29,40 +25,12 @@ function TicketDashboard() {
   })
 
   const handleEdit = (id) => {
-    const [EditTicket] = ticket.filter((news) => EditTicket.id === id)
-    setIsEditing(true)
-  }
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!'
-    }).then((result) => {
-      if (result.value) {
-        const [EditTicket] = ticket.filter((EditTicket) => EditTicket.id === id)
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Deleted!',
-          text: `${EditTicket.title}'s data has been deleted.`,
-          showConfirmButton: false,
-          timer: 1500
-        })
-
-        const ticketCopy = ticket.filter(EditTicket => EditTicket.id !== id);
-        localStorage.setItem('ticket_data', JSON.stringify(ticketCopy));
-        setTicket(ticketCopy);
-      }
-    })
+    // const [EditTicket] = ticket.filter((news) => EditTicket.id === id)
+    
   }
 
   return (
     <div className="container">
-
       {!isAuthorized && (
         <h3>
           ACCESS UNAUTHORIZED
@@ -77,24 +45,23 @@ function TicketDashboard() {
             setIsAdding={setIsAdding} />
           <TableTicketList
             apiTicket={apiTicket}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
+            setIsEditing={setIsEditing}
+            setCurrData={setCurrData}
             setIsAuthorized={setIsAuthorized} />
         </>
       )}
 
       {isAuthorized && isAdding && (
         <Add
-          setIsAdding={setIsAdding}
-          setTicket={setTicket}
-          ticket={ticket} />
+          apiTicket={apiTicket}
+          setIsAdding={setIsAdding} />
       )}
 
       {isAuthorized && isEditing && (
         <Edit
+          apiTicket={apiTicket}
           setIsEditing={setIsEditing}
-          setTicket={setTicket}
-          ticket={ticket} />
+          currData={currData} />
       )}
     </div>
   )

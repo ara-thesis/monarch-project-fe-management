@@ -50,18 +50,12 @@ function Edit({ apiNews, setIsEditing, currData }) {
     e.preventDefault()
     setIsEditing(false)
 
-    apiNews.put(
-      `/news/${currData.id}`,
-      {
-        title,
-        article,
-        status,
-        image: selectedImage
-      },
-      {
-        'Content-Type': 'multipart/form-data'
-      }
-    )
+    apiNews.put(`/news/${currData.id}`, {
+      title,
+      article,
+      status,
+      image: selectedImage
+    })
 
     Swal.fire({
       icon: 'success',
@@ -100,7 +94,7 @@ function Edit({ apiNews, setIsEditing, currData }) {
             marginBottom: '40px'
           }}
           type="text"
-          value={title}/>
+          value={title} />
 
         <label htmlFor="status">
           Status
@@ -143,7 +137,7 @@ function Edit({ apiNews, setIsEditing, currData }) {
           rows="18"
           style={{ '1px solid red': '.5px solid rgba(128, 128, 128, 0.555)' }}
           type="text"
-          value={article}/>
+          value={article} />
 
         <div style={styles.container}>
           <input
@@ -157,7 +151,7 @@ function Edit({ apiNews, setIsEditing, currData }) {
               paddingRight: '6px',
               marginTop: '20px'
             }}
-            type="file"/>
+            type="file" />
 
           {pageStart
             ? <div style={styles.preview}>

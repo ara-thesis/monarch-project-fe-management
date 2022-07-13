@@ -18,7 +18,7 @@ function Table({ apiBanner, setIsEditing, setCurrData }) {
       cancelButtonText: 'No, cancel!'
     }).then((result) => {
       if (result.value) {
-        apiBanner.delete(`banner/${id}`).then((resp) => {
+        apiBanner.delete(`banner/${id}`).then(response => {
           setUpdateState(true)
           fetchProcess()
           Swal.fire({

@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Add = ({ ticket, setTicket, setIsAdding }) => {
+const Add = ({ apiTicket, setIsAdding }) => {
   const [ticketName, setTicketName] = useState('');
   const [ticketDetails, setTicketDetails] = useState('');
   const [ticketPrice, setTicketPrice] = useState('');
-  
-  /*
-   *   //function ini dipanggil ketika file akan diganti/di change
-   *   Const imageChange = (e) => {
-   *     If (e.target.files && e.target.files.length > 0) {
-   *       SetSelectedImage(e.target.files[0]);
-   *     }
-   * };
-   */
-
-  // //function ini dipanggil ketika file akan dihapus
-  // Const removeSelectedImage = () => {
-  //     SetSelectedImage();
-  // };
 
   const handleAdd = (e) => {
     e.preventDefault()
 
     if (!ticketName || !ticketDetails || !ticketPrice) {
+
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -32,20 +19,13 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
       })
     }
 
-    const id = ticket.length + 1
-    const newTicket = {
-      // NewEmployee
-      id,
-      ticketName,
-      ticketDetails,
-      ticketPrice
-    }
+    apiTicket.post('/ticket', {
+      ticket_name: ticketName,
+      ticket_details: ticketDetails,
+      ticket_price: ticketPrice
+    })
 
-    ticket.push(newTicket);
-    localStorage.setItem('ticket_data', JSON.stringify(ticket));
-    setTicket(ticket);
     setIsAdding(false);
-
     Swal.fire({
       icon: 'success',
       title: 'Added!',
@@ -58,9 +38,9 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
-        <h1>
+        <h3>
           Add Ticket
-        </h1>
+        </h3>
 
         <label htmlFor="ticketName">
           Ticket Name
@@ -70,17 +50,8 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
           id="ticketName"
           name="ticketName"
           onChange={(e) => setTicketName(e.target.value)}
-          style={{
-            width: '100%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
-            paddingBottom: '6px',
-            paddingRight: '6px',
-            marginBottom: '40px'
-          }}
           type="text"
-          value={ticketName}
-        />
+          value={ticketName} />
 
         <label htmlFor="status">
           Ticket Details
@@ -90,18 +61,9 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
           id="ticketDetails"
           name="ticketDetails"
           onChange={(e) => setTicketDetails(e.target.value)}
-          style={{
-            width: '50%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
-            paddingBottom: '6px',
-            paddingRight: '6px',
-            marginLeft: '20px'
-          }}
           type="text"
-          value={ticketDetails}
-        />
-
+          value={ticketDetails} />
+          
         <label htmlFor="ticketPrice">
           Ticket Price (IDR)
         </label>
@@ -111,22 +73,18 @@ const Add = ({ ticket, setTicket, setIsAdding }) => {
           name="salary"
           onChange={(e) => setTicketPrice(e.target.value)}
           type="number"
-          value={ticketPrice}
-        />
+          value={ticketPrice} />
 
         <div style={{ marginTop: '30px' }}>
           <input
             type="submit"
-            value="Add"
-          />
-
+            value="Add" />
           <input
             className="muted-button"
             onClick={() => setIsAdding(false)}
             style={{ marginLeft: '12px' }}
             type="button"
-            value="Cancel"
-          />
+            value="Cancel" />
         </div>
       </form>
     </div>

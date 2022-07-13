@@ -1,21 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
-  const { id } = selectedEmployee
+function Edit({ apiTicket, setIsEditing, currData }) {
 
-  const [
-    ticketName,
-    setTicketName
-  ] = useState(selectedEmployee.ticketName)
-  const [
-    ticketDetails,
-    setTicketDetails
-  ] = useState(selectedEmployee.ticketDetails)
-  const [
-    ticketPrice,
-    setTicketPrice
-  ] = useState(selectedEmployee.ticketPrice)
+  const [ticketName, setTicketName] = useState("")
+  const [ticketDetails, setTicketDetails] = useState("")
+  const [ticketPrice, setTicketPrice] = useState("")
+  const [startStatus, setStartStatus] = useState(true)
 
   const handleUpdate = (e) => {
     e.preventDefault()
@@ -29,53 +20,45 @@ function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
       })
     }
 
-    const EditTicket = {
-      // Employee
-      id,
-      ticketName,
-      ticketDetails,
-      ticketPrice
-    }
+    apiTicket.put(`/ticket/${currData.id}`, {
+      ticket_name: ticketName,
+      ticket_details: ticketDetails,
+      ticket_price: ticketPrice
+    })
 
-    for (let i = 0; i < ticket.length; i++) {
-      if (ticket[i].id === id) {
-        ticket.splice(
-          i,
-          1,
-          EditTicket
-        )
-        break
-      }
-    }
-
-<<<<<<< HEAD
-    localStorage.setItem(
-      'employees_data',
-      JSON.stringify(ticket)
-    )
-    setTicket(ticket)
-    setIsEditing(false)
-=======
-    localStorage.setItem('ticket_data', JSON.stringify(ticket));
-    setTicket(ticket);
     setIsEditing(false);
->>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
     Swal.fire({
       icon: 'success',
       title: 'Updated!',
-      text: `${EditTicket.ticketName}'s data has been updated.`,
+      text: `Ticket data has been updated.`,
       showConfirmButton: false,
       timer: 1500
     })
   }
 
+  const fetchData = async () => {
+    if (startStatus) {
+      const result = await apiTicket.get(`/ticket/${currData.id}`)
+      if (result.data.data[0] !== null){
+        setTicketName(result.data.data[0].name)
+        setTicketDetails(result.data.data[0].details)
+        setTicketPrice(result.data.data[0].price)
+      }
+      setStartStatus(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [startStatus])
+
   return (
     <div className="small-container">
       <form onSubmit={handleUpdate}>
-        <h1>
-          Edit Employee
-        </h1>
+        <h3>
+          Edit Ticket
+        </h3>
 
         <label htmlFor="title">
           Ticket Name
@@ -85,17 +68,8 @@ function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
           id="ticketName"
           name="ticketName"
           onChange={(e) => setTicketName(e.target.value)}
-          style={{
-            width: '100%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
-            paddingBottom: '6px',
-            paddingRight: '6px',
-            marginBottom: '40px'
-          }}
           type="text"
-          value={ticketName}
-        />
+          value={ticketName} />
 
         <label htmlFor="status">
           Ticket Details
@@ -105,17 +79,8 @@ function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
           id="ticketDetails"
           name="ticketDetails"
           onChange={(e) => setTicketDetails(e.target.value)}
-          style={{
-            width: '50%',
-            paddingLeft: '8px',
-            paddingTop: '6px',
-            paddingBottom: '6px',
-            paddingRight: '6px',
-            marginLeft: '20px'
-          }}
           type="text"
-          value={ticketDetails}
-        />
+          value={ticketDetails} />
 
         <label htmlFor="ticketPrice">
           Ticket Price (IDR)
@@ -126,22 +91,19 @@ function Edit({ ticket, selectedEmployee, setTicket, setIsEditing }) {
           name="salary"
           onChange={(e) => setTicketPrice(e.target.value)}
           type="number"
-          value={ticketPrice}
-        />
+          value={ticketPrice} />
 
         <div style={{ marginTop: '30px' }}>
           <input
             type="submit"
-            value="Add"
-          />
+            value="Update" />
 
           <input
             className="muted-button"
             onClick={() => setIsEditing(false)}
             style={{ marginLeft: '12px' }}
             type="button"
-            value="Cancel"
-          />
+            value="Cancel" />
 
         </div>
       </form>

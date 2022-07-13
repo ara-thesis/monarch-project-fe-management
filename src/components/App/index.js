@@ -8,20 +8,12 @@ import Login from '../Login'
 // Import Dashboard from '../Dashboard';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import DB from '../../pages/Dashboard'
-<<<<<<< HEAD
 import PlaceInfo from '../Placeinfo'
 import News from '../News'
 import Banner from '../Banner'
 import Ticketing from '../Ticketing'
 import Payconf from '../PaymentConf'
 import Layout from '../Layout'
-=======
-import PlaceInfo from '../../pages/PlaceInfo'
-import News from '../News'
-import Ticketing from '../Ticketing'
-import Banner from '../../pages/Banner'
-import Layout from '../Layout';
->>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
 
 function App() {
   const [
@@ -29,16 +21,13 @@ function App() {
     setIsAuthenticated
   ] = useState(false)
 
-  useEffect(
-    () => {
-      if (localStorage.getItem('token') === '') {
-        setIsAuthenticated(false)
-      } else {
-        setIsAuthenticated(true)
-      }
-    },
-    []
-  )
+  useEffect(() => {
+    if (localStorage.getItem('token') === '') {
+      setIsAuthenticated(false)
+    } else {
+      setIsAuthenticated(true)
+    }
+  }, [])
 
   return (
 
@@ -63,7 +52,6 @@ function App() {
           <BrowserRouter>
             <Route render={(props) => (
               <Layout {...props}>
-<<<<<<< HEAD
                 <Switch>
                   <Route
                     component={DB}
@@ -86,23 +74,6 @@ function App() {
                     path='/Payconfm' />
                   <Redirect to='/Dashboard' />
                 </Switch>
-=======
-                  <Switch>
-                  {/* <Route path={'/NewsAdd'} component={NewsAdd}/> */}
-                  {isAuthenticated ? (
-
-<News setIsAuthenticated={setIsAuthenticated}/>
-) : (
-<Login setIsAuthenticated={setIsAuthenticated} /> 
-                    )};
-                      <Route path="/Dashboard" exact component={DB}/>
-                      <Route path="/PlaceInfo" component={PlaceInfo}/>
-                      <Route path="/Banner" component={Banner}/>
-                      <Route path="/News" component={News} />
-                      <Route path="/Ticketing" component={Ticketing}/>
-                  </Switch>
-
->>>>>>> d9496ce0ee886722a892b91ae601ee5b7eb28be1
               </Layout>
             )}
             />

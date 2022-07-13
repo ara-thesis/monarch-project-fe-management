@@ -4,22 +4,10 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
 function Add({ apiBanner, setIsAdding }) {
-  const [
-    title,
-    setTitle
-  ] = useState('')
-  const [
-    status,
-    setStatus
-  ] = useState('true')
-  const [
-    detail,
-    setDetail
-  ] = useState('')
-  const [
-    selectedImage,
-    setSelectedImage
-  ] = useState()
+  const [title, setTitle] = useState('')
+  const [status, setStatus] = useState('true')
+  const [detail, setDetail] = useState('')
+  const [selectedImage, setSelectedImage] = useState()
 
   const styles = {
     container: {
@@ -74,18 +62,12 @@ function Add({ apiBanner, setIsAdding }) {
 
     setIsAdding(false)
 
-    apiBanner.post(
-      '/banner',
-      {
-        detail,
-        image: selectedImage,
-        status,
-        title
-      },
-      {
-        'Content-Type': 'multipart/form-data'
-      }
-    )
+    apiBanner.post('/banner', {
+      detail,
+      image: selectedImage,
+      status,
+      title
+    })
 
     Swal.fire({
       icon: 'success',
@@ -120,8 +102,7 @@ function Add({ apiBanner, setIsAdding }) {
             width: '100%'
           }}
           type="text"
-          value={title}
-        />
+          value={title} />
 
         <label htmlFor="status">
           Status
@@ -140,8 +121,7 @@ function Add({ apiBanner, setIsAdding }) {
             width: '50%'
           }}
           type="text"
-          value={status}
-        >
+          value={status}>
           <option value>
             Active
           </option>
@@ -164,8 +144,7 @@ function Add({ apiBanner, setIsAdding }) {
           rows="18"
           style={{ '1px solid red': '.5px solid rgba(128, 128, 128, 0.555)' }}
           type="text"
-          value={detail}
-        />
+          value={detail} />
         <div style={styles.container}>
           <input
             accept="image/*"
@@ -178,21 +157,18 @@ function Add({ apiBanner, setIsAdding }) {
               paddingTop: '6px',
               width: '30%'
             }}
-            type="file"
-          />
+            type="file" />
 
           {selectedImage
             ? <div style={styles.preview}>
               <img
                 alt="Thumb"
                 src={URL.createObjectURL(selectedImage)}
-                style={styles.image}
-              />
+                style={styles.image} />
 
               <button
                 onClick={removeSelectedImage}
-                style={styles.delete}
-              >
+                style={styles.delete}>
                 Remove This Image
               </button>
             </div>
@@ -202,16 +178,14 @@ function Add({ apiBanner, setIsAdding }) {
         <div style={{ marginTop: '30px' }}>
           <input
             type="submit"
-            value="Add"
-          />
+            value="Add" />
 
           <input
             className="muted-button"
             onClick={() => setIsAdding(false)}
             style={{ marginLeft: '12px' }}
             type="button"
-            value="Cancel"
-          />
+            value="Cancel" />
         </div>
       </form>
     </div>
