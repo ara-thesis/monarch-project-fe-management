@@ -7,10 +7,7 @@ function Sidebar(props, { defaultActive }) {
   const { location } = props.history
   const lastActiveIndexString = localStorage.getItem('lastActiveIndex')
   const lastActiveIndex = Number(lastActiveIndexString)
-  const [
-    activeIndex,
-    setActiveIndex
-  ] = useState(lastActiveIndex || defaultActive)
+  const [activeIndex, setActiveIndex] = useState(lastActiveIndex || defaultActive)
 
   function changeActiveIndex(newIndex) {
     localStorage.setItem(
@@ -27,24 +24,20 @@ function Sidebar(props, { defaultActive }) {
     return path
   }
 
-  useEffect(
-    () => {
-      const activeItem = SidebarData.findIndex((item) => getPath(item.route) === getPath(location.pathname))
-      changeActiveIndex(activeItem)
-    },
-    [location]
-  )
+  useEffect(() => {
+    const activeItem = SidebarData.findIndex((item) => getPath(item.route) === getPath(location.pathname))
+    changeActiveIndex(activeItem)
+  }, [location])
 
   return (
     <SidebarParent>
       <div style={{ position: 'fixed' }}>
         {
           SidebarData.map((item, index) => (
-            <Link to={item.route}>
+            <Link to={item.route} key={item.name}>
               <SidebarItem
                 active={index === activeIndex}
-                key={item.name}
-              >
+                key={item.name}>
                 <p>
                   {item.name}
                 </p>
@@ -52,11 +45,8 @@ function Sidebar(props, { defaultActive }) {
             </Link>
           ))
         }
-
       </div>
-
       <div className="behind-the-scenes" />
-
       <span className="block-example border-right border-dark" />
     </SidebarParent>
   )

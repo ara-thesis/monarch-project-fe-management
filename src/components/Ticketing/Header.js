@@ -2,7 +2,7 @@ import React from 'react'
 
 import Logout from '../Logout'
 
-function Header({ setIsAdding, setIsAuthenticated }) {
+function Header({ setIsAdding }) {
     return (<header>
         <h3>
             Ticket Management
@@ -12,8 +12,6 @@ function Header({ setIsAdding, setIsAuthenticated }) {
             <button onClick={() => setIsAdding(true)}>
                 Add Ticket
             </button>
-
-            <Logout setIsAuthenticated={setIsAuthenticated} />
         </div>
     </header>)
 }

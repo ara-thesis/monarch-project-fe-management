@@ -2,7 +2,7 @@ import React from 'react'
 
 import Logout from '../Logout'
 
-function Header({ setIsAdding, setIsAuthenticated }) {
+function Header({ setIsAdding }) {
   return (<header>
     <h3>
       Banner Management

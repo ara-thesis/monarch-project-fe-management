@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
-function Add({ apiNews, setIsAdding }) {
+function Add({ apiBanner, setIsAdding }) {
   const [
     title,
     setTitle
@@ -74,7 +74,7 @@ function Add({ apiNews, setIsAdding }) {
 
     setIsAdding(false)
 
-    apiNews.post(
+    apiBanner.post(
       '/banner',
       {
         detail,

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Swal from 'sweetalert2'
 import axios from 'axios'
 
 import Header from './Header'
@@ -7,12 +6,12 @@ import Table from './Table'
 import Add from './Add'
 import Edit from './Edit'
 
-function BannerDashboard({ setIsAuthenticated }) {
+function BannerDashboard() {
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [currData, setCurrData] = useState()
 
-  const apiNews = axios.create({
+  const apiBanner = axios.create({
     baseURL: 'http://172.22.56.135:8000/api',
     timeout: 0,
     headers: {
@@ -21,28 +20,6 @@ function BannerDashboard({ setIsAuthenticated }) {
     }
   })
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!'
-    }).then((result) => {
-      if (result.value) {
-        apiNews.delete(`banner/${id}`).then((resp) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'data has been deleted.',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-      }
-    })
-  }
 
   return (
     <div className="container">
@@ -50,12 +27,10 @@ function BannerDashboard({ setIsAuthenticated }) {
         <>
           <Header
             setIsAdding={setIsAdding}
-            setIsAuthenticated={setIsAuthenticated}
           />
 
           <Table
-            apiNews={apiNews}
-            handleDelete={handleDelete}
+            apiBanner={apiBanner}
             setCurrData={setCurrData}
             setIsEditing={setIsEditing}
           />
@@ -64,14 +39,14 @@ function BannerDashboard({ setIsAuthenticated }) {
 
       {isAdding
         ? <Add
-          apiNews={apiNews}
+          apiBanner={apiBanner}
           setIsAdding={setIsAdding}
         />
         : null}
 
       {isEditing
         ? <Edit
-          apiNews={apiNews}
+          apiBanner={apiBanner}
           currData={currData}
           setIsEditing={setIsEditing}
         />

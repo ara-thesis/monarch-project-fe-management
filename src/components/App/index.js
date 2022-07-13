@@ -12,6 +12,7 @@ import PlaceInfo from '../Placeinfo'
 import News from '../News'
 import Banner from '../Banner'
 import Ticketing from '../Ticketing'
+import Payconf from '../PaymentConf'
 import Layout from '../Layout'
 
 function App() {
@@ -44,9 +45,10 @@ function App() {
           <div>
             <BrowserRouter>
               <Route
-              component={Login}
-              exact
-              path='/Login'/>
+                component={Login}
+                exact
+                path='/Login' />
+              <Redirect to='/Login' />
             </BrowserRouter>
           </div>
         ) : (
@@ -54,35 +56,25 @@ function App() {
             <Route render={(props) => (
               <Layout {...props}>
                 <Switch>
-
                   <Route
                     component={DB}
                     exact
-                    path="/Dashboard"
-                  />
-
+                    path="/Dashboard" />
                   <Route
                     component={PlaceInfo}
-                    path="/PlaceInfo"
-                  />
-
+                    path="/PlaceInfo" />
                   <Route
                     component={Banner}
-                    path="/Banner"
-                  />
-
-                  <News setIsAuthenticated={setIsAuthenticated} />
-
+                    path="/Banner" />
                   <Route
                     component={News}
-                    path="/news"
-                  />
-
+                    path="/news" />
                   <Route
                     component={Ticketing}
-                    path="/Ticketing"
-                  />
-
+                    path="/Ticketing" />
+                  <Route
+                    component={Payconf}
+                    path='/Payconfm' />
                   <Redirect to='/Dashboard' />
                 </Switch>
               </Layout>

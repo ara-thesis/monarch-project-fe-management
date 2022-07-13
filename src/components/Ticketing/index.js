@@ -2,44 +2,33 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { Button, Card, Col, Row } from 'react-bootstrap'
 import CardGroup from 'react-bootstrap/CardGroup'
+import axios from 'axios'
 
 import Header from './Header'
-import Table from './Table'
+import TableTicketList from './TableTicketList'
+import TableTicketDashboard from './TableTicketDashboard'
 import Add from './Add'
 import Edit from './Edit'
 
 import { ticketData } from '../../data/ticket-data'
 
-function Dashboard({ setIsAuthenticated }) {
-  const [
-    ticket,
-    setTicket
-  ] = useState(ticketData)
-  const [
-    selectedEmployee,
-    setSelectedEmployee
-  ] = useState(null)
-  const [
-    isAdding,
-    setIsAdding
-  ] = useState(false)
-  const [
-    isEditing,
-    setIsEditing
-  ] = useState(false)
+function TicketDashboard() {
+  const [ticket, setTicket] = useState(ticketData)
+  const [isAdding, setIsAdding] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(true)
 
-  useEffect(
-    () => {
-      const data = JSON.parse(localStorage.getItem('employees_data'))
-      if (data !== null && Object.keys(data).length !== 0) setTicket(data)
-    },
-    []
-  )
+  const apiTicket = axios.create({
+    baseURL: 'http://172.22.56.135:8000/api',
+    timeout: 0,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
 
   const handleEdit = (id) => {
     const [EditTicket] = ticket.filter((news) => EditTicket.id === id)
-
-    setSelectedEmployee(EditTicket)
     setIsEditing(true)
   }
 
@@ -75,102 +64,42 @@ function Dashboard({ setIsAuthenticated }) {
 
   return (
     <div className="container">
-      {!isAdding && !isEditing && (
-        <>
-          <Header
-            setIsAdding={setIsAdding}
-            setIsAuthenticated={setIsAuthenticated}
-          />
 
-          <Table
+      {!isAuthorized && (
+        <h3>
+          ACCESS UNAUTHORIZED
+        </h3>
+      )}
+
+      {isAuthorized && !isAdding && !isEditing && (
+        <>
+          <TableTicketDashboard
+            apiTicket={apiTicket} />
+          <Header
+            setIsAdding={setIsAdding} />
+          <TableTicketList
+            apiTicket={apiTicket}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            ticket={ticket}
-          />
+            setIsAuthorized={setIsAuthorized} />
         </>
       )}
 
-      <h4 style={{ textAlign: 'center' }}>
-        Income
-      </h4>
-
-      <br />
-
-      <CardGroup>
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              Total earnings
-            </Card.Title>
-
-            <Card.Text>
-              Rp.9999999
-              {' '}
-            </Card.Text>
-          </Card.Body>
-
-          <Card.Footer>
-            <small className="text-muted">
-              Last updated 3 mins ago
-            </small>
-          </Card.Footer>
-        </Card>
-
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              Ticket sold today
-            </Card.Title>
-
-            <Card.Text>
-              1000
-            </Card.Text>
-          </Card.Body>
-
-          <Card.Footer>
-            <small className="text-muted">
-              Last updated 3 mins ago
-            </small>
-          </Card.Footer>
-        </Card>
-
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              Total ticket sold
-            </Card.Title>
-
-            <Card.Text>
-              1000
-            </Card.Text>
-          </Card.Body>
-
-          <Card.Footer>
-            <small className="text-muted">
-              Last updated 3 mins ago
-            </small>
-          </Card.Footer>
-        </Card>
-      </CardGroup>
-
-      {isAdding
-        ? <Add
+      {isAuthorized && isAdding && (
+        <Add
           setIsAdding={setIsAdding}
           setTicket={setTicket}
-          ticket={ticket}
-        />
-        : null}
+          ticket={ticket} />
+      )}
 
-      {isEditing
-        ? <Edit
-          selectedEmployee={selectedEmployee}
+      {isAuthorized && isEditing && (
+        <Edit
           setIsEditing={setIsEditing}
           setTicket={setTicket}
-          ticket={ticket}
-        />
-        : null}
+          ticket={ticket} />
+      )}
     </div>
   )
 }
 
-export default Dashboard
+export default TicketDashboard

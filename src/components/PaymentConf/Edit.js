@@ -1,31 +1,13 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
-function Edit({ apiBanner, setIsEditing, currData }) {
-  const [
-    title,
-    setTitle
-  ] = useState(currData.title)
-  const [
-    status,
-    setStatus
-  ] = useState(currData.status)
-  const [
-    detail,
-    setDetail
-  ] = useState(currData.article)
-  const [
-    oldImage,
-    setOldImage
-  ] = useState(currData.image)
-  const [
-    selectedImage,
-    setSelectedImage
-  ] = useState()
-  const [
-    pageStart,
-    setPageStart
-  ] = useState(true)
+function Edit({ apiNews, setIsEditing, currData }) {
+  const [title, setTitle] = useState(currData.title)
+  const [status, setStatus] = useState(currData.status)
+  const [article, setArticle] = useState(currData.article)
+  const [oldImage, setOldImage] = useState(currData.image)
+  const [selectedImage, setSelectedImage] = useState()
+  const [pageStart, setPageStart] = useState(true)
 
   const styles = {
     container: {
@@ -66,14 +48,13 @@ function Edit({ apiBanner, setIsEditing, currData }) {
 
   const handleEdit = (e) => {
     e.preventDefault()
-
     setIsEditing(false)
 
-    apiBanner.put(
-      `/banner/${currData.id}`,
+    apiNews.put(
+      `/news/${currData.id}`,
       {
         title,
-        detail,
+        article,
         status,
         image: selectedImage
       },
@@ -99,7 +80,7 @@ function Edit({ apiBanner, setIsEditing, currData }) {
     <div className="small-container">
       <form onSubmit={handleEdit}>
         <h1>
-          Edit Banner
+          Edit News
         </h1>
 
         <label htmlFor="title">
@@ -119,8 +100,7 @@ function Edit({ apiBanner, setIsEditing, currData }) {
             marginBottom: '40px'
           }}
           type="text"
-          value={title}
-        />
+          value={title}/>
 
         <label htmlFor="status">
           Status
@@ -139,8 +119,8 @@ function Edit({ apiBanner, setIsEditing, currData }) {
             marginLeft: '20px'
           }}
           type="text"
-          value={status}
-        >
+          value={status}>
+
           <option value>
             Active
           </option>
@@ -150,21 +130,20 @@ function Edit({ apiBanner, setIsEditing, currData }) {
           </option>
         </select>
 
-        <label htmlFor="description">
-          Description
+        <label htmlFor="article">
+          Article
         </label>
 
         <textarea
           cols="100"
-          id="description"
-          name="description"
-          onChange={(e) => setDetail(e.target.value)}
+          id="article"
+          name="article"
+          onChange={(e) => setArticle(e.target.value)}
           placeholder="Tulis berita anda"
           rows="18"
           style={{ '1px solid red': '.5px solid rgba(128, 128, 128, 0.555)' }}
           type="text"
-          value={detail}
-        />
+          value={article}/>
 
         <div style={styles.container}>
           <input
@@ -178,8 +157,7 @@ function Edit({ apiBanner, setIsEditing, currData }) {
               paddingRight: '6px',
               marginTop: '20px'
             }}
-            type="file"
-          />
+            type="file"/>
 
           {pageStart
             ? <div style={styles.preview}>

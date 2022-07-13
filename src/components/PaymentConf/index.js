@@ -4,11 +4,9 @@ import axios from 'axios'
 
 import Header from './Header'
 import Table from './Table'
-import Add from './Add'
 import Edit from './Edit'
 
-function NewsDashboard() {
-  const [isAdding, setIsAdding] = useState(false)
+function PayConfmDashboard() {
   const [isEditing, setIsEditing] = useState(false)
   const [currData, setCurrData] = useState()
   const [isAuthorized, setIsAuthorized] = useState(true)
@@ -49,26 +47,20 @@ function NewsDashboard() {
     <div className="container">
 
       {!isAuthorized && (
-        <h3>ACCESS UNAUTHORIZED</h3>
+        <h3>
+          ACCESS UNAUTHORIZED
+        </h3>
       )}
 
-      {isAuthorized && !isAdding && !isEditing && (
+      {isAuthorized && !isEditing && (
         <>
-          <Header
-            setIsAdding={setIsAdding} />
+          <Header />
           <Table
             apiNews={apiNews}
-            handleDelete={handleDelete}
             setCurrData={setCurrData}
             setIsEditing={setIsEditing}
-            setIsAuthorized={setIsAuthorized}/>
+            setIsAuthorized={setIsAuthorized} />
         </>
-      )}
-
-      {isAuthorized && isAdding && (
-        <Add
-          apiNews={apiNews}
-          setIsAdding={setIsAdding} />
       )}
 
       {isAuthorized && isEditing && (
@@ -81,4 +73,4 @@ function NewsDashboard() {
   )
 }
 
-export default NewsDashboard
+export default PayConfmDashboard

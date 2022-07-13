@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 // Import Add from './Add';
 
 // Const Table = ({ news, handleEdit, handleDelete }) => {
-function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthorized }) {
+function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
   // Let newsList = [];
   const [newsList = [], newsListHook] = useState()
   const [isUpdated, setIsUpdated] = useState(true)
 
   const fetchProcess = async () => {
     try {
-      const resp = await apiNews.get('/news/list/admin')
+      const resp = await apiNews.get('/payment')
       if (resp.data.data[0] !== null) newsListHook(resp.data.data)
       else newsListHook([])
+      setIsAuthorized(true)
     } catch (err) {
       if (err.request.status === 403) {
         setIsAuthorized(false)
@@ -20,35 +21,11 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
     setIsUpdated(false)
   }
 
-  // const fetchProcess = () => {
-  //   apiNews.get('/news/list/admin')
-  //   .then(response => {
-  //     newsListHook(response.data.data)
-  //   })
-  // }
-
   useEffect(() => {
 
     fetchProcess()
-    // if(isUpdated){
-    //   console.log("re-render result")
-    // }
   }, [apiNews, newsList]
   )
-
-  /*
-   * News.forEach((EditNews, i) => {
-   *   EditNews.id = i + 1;
-   * });
-   */
-
-  /*
-   * Const formatter = new Intl.NumberFormat('en-US', {
-   *   style: 'currency',
-   *   currency: 'USD',
-   *   minimumFractionDigits: null,
-   * });
-   */
 
   return (
     <div className="contain-table">
@@ -58,19 +35,15 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
             <th>
               No.
             </th>
-
             <th>
-              Title
+              Name
             </th>
-
             <th>
-              Status
+              Total Price
             </th>
-
             <th
               className="text-center"
-              colSpan={2}
-            >
+              colSpan={2}>
               Actions
             </th>
           </tr>
@@ -83,13 +56,11 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
                 <td>
                   {i + 1}
                 </td>
-
                 <td>
-                  {EditNews.title}
+                  {EditNews.total_price}
                 </td>
-
                 <td>
-                  {EditNews.status}
+                  {EditNews.created_at}
                 </td>
 
                 <td className="text-right">
@@ -98,20 +69,8 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
                     onClick={() => {
                       setIsEditing(true)
                       setCurrData(EditNews)
-                    }}
-                  >
-                    Edit
-                  </button>
-                </td>
-
-                <td className="text-left">
-                  <button
-                    className="button muted-button"
-                    onClick={() => {
-                      handleDelete(EditNews.id)
-                      setIsUpdated(true)
                     }}>
-                    Delete
+                    Details
                   </button>
                 </td>
               </tr>
@@ -119,7 +78,7 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
           ) : (
             <tr>
               <td colSpan={7}>
-                No News
+                No payment confirmation request
               </td>
             </tr>
           )}

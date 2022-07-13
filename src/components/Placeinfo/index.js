@@ -296,13 +296,7 @@ function PlaceInfoDashboard() {
         </div>
 
       ) : (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <h4>ACCESS UNAUTHORIZED</h4>
-        </div>
+        <h3>ACCESS UNAUTHORIZED</h3>
       )}
 
     </div>

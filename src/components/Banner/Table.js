@@ -1,28 +1,54 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 // Import Add from './Add';
 
 // Const Table = ({ news, handleEdit, handleDelete }) => {
-function Table({ apiNews, setIsEditing, handleDelete, setCurrData }) {
+function Table({ apiBanner, setIsEditing, setCurrData }) {
   // Let newsList = [];
-  const [
-    bannerList = [],
-    newsListHook
-  ] = useState()
+  const [bannerList = [], bannerListHook] = useState()
+  const [updateState, setUpdateState] = useState(true)
 
-  useEffect(
-    () => {
-      const fetchProcess = async () => {
-        const resp = await apiNews.get('/banner')
-        if (resp.data.data[0] !== null) newsListHook(resp.data.data)
-        else newsListHook([])
+  const handleDelete = (id) => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!'
+    }).then((result) => {
+      if (result.value) {
+        apiBanner.delete(`banner/${id}`).then((resp) => {
+          setUpdateState(true)
+          fetchProcess()
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'data has been deleted.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
       }
+    })
+  }
+
+  const fetchProcess = async () => {
+    console.log(updateState)
+    if (updateState) {
+      const resp = await apiBanner.get('/banner')
+      if (resp.data.data[0] !== null) {
+        bannerListHook(resp.data.data)
+        console.log(resp.data.data)
+        setUpdateState(false)
+      }
+      else bannerListHook([])
+    }
+  }
+
+  useEffect(() => {
       fetchProcess()
-    },
-    [
-      apiNews,
-      bannerList
-    ]
-  )
+    }, [apiBanner, bannerList])
 
   return (
     <div className="contain-table">
@@ -82,7 +108,10 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData }) {
                   <td className="text-left">
                     <button
                       className="button muted-button"
-                      onClick={() => handleDelete(EditBanner.id)}
+                      onClick={() => {
+                        setUpdateState(true)
+                        handleDelete(EditBanner.id)
+                      }}
                     >
                       Delete
                     </button>

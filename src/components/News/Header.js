@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Header({ setIsAdding, setIsAuthenticated }) {
+function Header({ setIsAdding }) {
     return (<header>
         <h3>
             News Management
