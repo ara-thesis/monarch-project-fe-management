@@ -6,12 +6,14 @@ import TableTicketList from './TableTicketList'
 import TableTicketDashboard from './TableTicketDashboard'
 import Add from './Add'
 import Edit from './Edit'
+import Redeem from './Redeem'
 // import Redeem from './redeem'
 
 
 function TicketDashboard() {
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [isRedeem, setIsRedeem] = useState(false)
   const [isAuthorized, setIsAuthorized] = useState(true)
   const [currData, setCurrData] = useState()
 
@@ -24,11 +26,6 @@ function TicketDashboard() {
     }
   })
 
-  const handleEdit = (id) => {
-    // const [EditTicket] = ticket.filter((news) => EditTicket.id === id)
-    
-  }
-
   return (
     <div className="container">
       {!isAuthorized && (
@@ -37,10 +34,11 @@ function TicketDashboard() {
         </h3>
       )}
 
-      {isAuthorized && !isAdding && !isEditing && (
+      {isAuthorized && !isAdding && !isEditing && !isRedeem && (
         <>
           <TableTicketDashboard
-            apiTicket={apiTicket} />
+            apiTicket={apiTicket}
+            setIsRedeem={setIsRedeem} />
           <Header
             setIsAdding={setIsAdding} />
           <TableTicketList
@@ -62,6 +60,12 @@ function TicketDashboard() {
           apiTicket={apiTicket}
           setIsEditing={setIsEditing}
           currData={currData} />
+      )}
+
+      {isAuthorized && isRedeem && (
+        <Redeem
+          apiTicket={apiTicket}
+          setIsRedeem={setIsRedeem} />
       )}
     </div>
   )

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-// Import Add from './Add';
+import React, { useCallback, useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
-// Const Table = ({ news, handleEdit, handleDelete }) => {
-function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthorized }) {
-  // Let newsList = [];
+function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
   const [newsList = [], newsListHook] = useState()
-  const [isUpdated, setIsUpdated] = useState(true)
+  // const [isUpdated, setIsUpdated] = useState(true)
+  const [fetchTrigger, setFetchTrigger] = useState(0)
 
-  const fetchProcess = async () => {
+  const fetchProcess = useCallback(async () => {
     try {
       const resp = await apiNews.get('/news/list/admin')
       if (resp.data.data[0] !== null) newsListHook(resp.data.data)
@@ -17,38 +16,39 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
         setIsAuthorized(false)
       }
     }
-    setIsUpdated(false)
+    setFetchTrigger(num => num + 1)
+  }, [apiNews, setIsAuthorized])
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!'
+    }).then((result) => {
+      if (result.value) {
+        apiNews.delete(`news/${id}`).then((resp) => {
+          setFetchTrigger(0)
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'data has been deleted.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+      }
+    })
   }
 
-  // const fetchProcess = () => {
-  //   apiNews.get('/news/list/admin')
-  //   .then(response => {
-  //     newsListHook(response.data.data)
-  //   })
-  // }
-
   useEffect(() => {
-
-    fetchProcess()
-    // if(isUpdated){
-    //   console.log("re-render result")
-    // }
-  }, [apiNews, newsList]
-  )
-
-  /*
-   * News.forEach((EditNews, i) => {
-   *   EditNews.id = i + 1;
-   * });
-   */
-
-  /*
-   * Const formatter = new Intl.NumberFormat('en-US', {
-   *   style: 'currency',
-   *   currency: 'USD',
-   *   minimumFractionDigits: null,
-   * });
-   */
+    if (fetchTrigger < 3) {
+      console.log("re-render result")
+      fetchProcess()
+    }
+  }, [fetchProcess, fetchTrigger])
 
   return (
     <div className="contain-table">
@@ -58,19 +58,15 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
             <th>
               No.
             </th>
-
             <th>
               Title
             </th>
-
             <th>
               Status
             </th>
-
             <th
               className="text-center"
-              colSpan={2}
-            >
+              colSpan={2} >
               Actions
             </th>
           </tr>
@@ -83,33 +79,29 @@ function Table({ apiNews, setIsEditing, handleDelete, setCurrData, setIsAuthoriz
                 <td>
                   {i + 1}
                 </td>
-
                 <td>
                   {EditNews.title}
                 </td>
-
                 <td>
                   {EditNews.status}
                 </td>
-
                 <td className="text-right">
                   <button
                     className="button muted-button"
                     onClick={() => {
                       setIsEditing(true)
-                      setCurrData(EditNews)
-                    }}
-                  >
+                      setCurrData({
+                        id: EditNews.id
+                      })
+                    }}>
                     Edit
                   </button>
                 </td>
-
                 <td className="text-left">
                   <button
                     className="button muted-button"
                     onClick={() => {
                       handleDelete(EditNews.id)
-                      setIsUpdated(true)
                     }}>
                     Delete
                   </button>

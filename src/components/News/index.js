@@ -22,29 +22,6 @@ function NewsDashboard() {
     }
   })
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!'
-    }).then((result) => {
-      if (result.value) {
-        apiNews.delete(`news/${id}`).then((resp) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'data has been deleted.',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-      }
-    })
-  }
-
   return (
     <div className="container">
 
@@ -58,7 +35,6 @@ function NewsDashboard() {
             setIsAdding={setIsAdding} />
           <Table
             apiNews={apiNews}
-            handleDelete={handleDelete}
             setCurrData={setCurrData}
             setIsEditing={setIsEditing}
             setIsAuthorized={setIsAuthorized}/>
