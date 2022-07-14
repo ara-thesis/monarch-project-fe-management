@@ -7,7 +7,6 @@ import TableTicketDashboard from './TableTicketDashboard'
 import Add from './Add'
 import Edit from './Edit'
 import Redeem from './Redeem'
-// import Redeem from './redeem'
 
 
 function TicketDashboard() {

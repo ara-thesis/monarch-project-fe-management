@@ -7,7 +7,7 @@ import NavigationB from '../Navbar'
 import Login from '../Login'
 // Import Dashboard from '../Dashboard';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import DB from '../../pages/Dashboard'
+import Dashboard from '../Dashboard'
 import PlaceInfo from '../Placeinfo'
 import News from '../News'
 import Banner from '../Banner'
@@ -32,10 +32,8 @@ function App() {
   return (
 
     <div className="App">
-
-      <Container>
-        <NavigationB />
-      </Container>
+      
+      <NavigationB />
 
       <div className='App-Body'>
         {!isAuthenticated ? (
@@ -54,7 +52,7 @@ function App() {
               <Layout {...props}>
                 <Switch>
                   <Route
-                    component={DB}
+                    component={Dashboard}
                     exact
                     path="/Dashboard" />
                   <Route
