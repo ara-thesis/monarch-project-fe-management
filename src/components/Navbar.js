@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Navbar, Row } from 'react-bootstrap'
+import { Container, Navbar, NavDropdown } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Logout from './Logout'
@@ -7,17 +7,25 @@ import Logout from './Logout'
 function NavigationB() {
   return (<div>
     <Navbar
-      bg="light"
+      bg="dark"
+      variant="dark"
       expand="lg"
-      style={{ width: '90%', position: 'fixed' }}>
+      fixed="top"
+      style={{ width: '100%', padding: '12px' }}>
+      <Container>
       <Navbar.Brand href="/Dashboard">
-        Travelia
+        Jalanria
       </Navbar.Brand>
-
+      <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Signed in as: <a href="#login">Mark Otto</a>
+          </Navbar.Text>
+          <Logout />
+        </Navbar.Collapse>
+      </Container>
+    
       
-      <Logout />
-
-      <Navbar.Collapse id="basic-navbar-nav" />
+      
     </Navbar>
   </div>)
 }

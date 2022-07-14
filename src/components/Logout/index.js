@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -32,13 +33,14 @@ function Logout() {
   }
 
   return (
-    <button
+    <Button
       className="muted-button"
       onClick={handleLogout}
-      style={{ marginLeft: '12px' }}
+      variant='danger'
+      style={{ marginLeft: '12px'}}
     >
       Logout
-    </button>
+    </Button>
   )
 }
 

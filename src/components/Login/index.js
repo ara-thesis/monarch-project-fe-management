@@ -8,18 +8,12 @@ function Login() {
    * const adminPassword = "asdf@asdf.com";
    */
 
-  const [
-    email,
-    setEmail
-  ] = useState('')
-  const [
-    password,
-    setPassword
-  ] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const apiLogin = axios.create({
     baseURL: 'http://172.22.56.135:8000/api',
-    // baseURL: 'http://localhost:8000/api',
+    // withCredentials: true,
     timeout: 0,
     headers: {
       'Content-Type': 'multipart/form-data'
