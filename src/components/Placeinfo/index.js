@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import { ApiConnect } from '../../helper/ApiConnect'
+import { GetToken } from '../../helper/TokenHelper'
 import Form from 'react-bootstrap/Form'
 import { Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
@@ -32,15 +33,7 @@ function PlaceInfoDashboard() {
   const [isAuthorized, setIsAuthorized] = useState(true)
   const [selectedImages, setSelectedImages] = useState()
 
-  const apiPlaceInfo = axios.create({
-    baseURL: 'http://172.22.56.135:8000/api',
-    // baseURL: 'http://localhost:8000/api',
-    timeout: 0,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  })
+  const apiPlaceInfo = ApiConnect(GetToken)
 
   useEffect(() => {
     const startup = async () => {

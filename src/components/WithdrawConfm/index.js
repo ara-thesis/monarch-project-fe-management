@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import { ApiConnect } from '../../helper/ApiConnect'
+import { GetToken } from '../../helper/TokenHelper'
 
 import Header from './Header'
 import Table from './Table'
 import Edit from './Edit'
 
-function PayConfmDashboard() {
+function WithdrawConfmDashboard() {
   const [isEditing, setIsEditing] = useState(false)
   const [currData, setCurrData] = useState()
   const [isAuthorized, setIsAuthorized] = useState(true)
 
-  const apiNews = axios.create({
-    baseURL: 'http://172.22.56.135:8000/api',
-    timeout: 0,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  })
-
+  const apiNews = ApiConnect(GetToken)
+  
   const handleDelete = (id) => {
     Swal.fire({
       icon: 'warning',
@@ -73,4 +67,4 @@ function PayConfmDashboard() {
   )
 }
 
-export default PayConfmDashboard
+export default WithdrawConfmDashboard

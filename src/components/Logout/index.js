@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
+import { SetToken } from '../../helper/TokenHelper'
 import Swal from 'sweetalert2'
 
 function Logout() {
@@ -15,7 +16,7 @@ function Logout() {
       confirmButtonText: 'Yes'
     }).then((result) => {
       // Empty token
-      localStorage.setItem('token', '')
+      SetToken('')
       if (result.value) {
         Swal.fire({
           timer: 1500,

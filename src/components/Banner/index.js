@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { ApiConnect } from '../../helper/ApiConnect'
+import { GetToken } from '../../helper/TokenHelper'
 
 import Header from './Header'
 import Table from './Table'
@@ -11,15 +12,7 @@ function BannerDashboard() {
   const [isEditing, setIsEditing] = useState(false)
   const [currData, setCurrData] = useState()
 
-  const apiBanner = axios.create({
-    baseURL: 'http://172.22.56.135:8000/api',
-    timeout: 0,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  })
-
+  const apiBanner = ApiConnect(GetToken)
 
   return (
     <div className="container">

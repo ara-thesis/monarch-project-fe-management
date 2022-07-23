@@ -12,7 +12,8 @@ import PlaceInfo from '../Placeinfo'
 import News from '../News'
 import Banner from '../Banner'
 import Ticketing from '../Ticketing'
-import Payconf from '../PaymentConf'
+import Payconfm from '../PaymentConfm'
+import WithdrawConfm from '../WithdrawConfm'
 import Layout from '../Layout'
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
   return (
 
     <div className="App">
-      
+
       <NavigationB />
 
       <div className='App-Body'>
@@ -68,8 +69,11 @@ function App() {
                     component={Ticketing}
                     path="/Ticketing" />
                   <Route
-                    component={Payconf}
+                    component={Payconfm}
                     path='/Payconfm' />
+                  <Route
+                    component={WithdrawConfm}
+                    path='/Withdrawconfm' />
                   <Redirect to='/Dashboard' />
                 </Switch>
               </Layout>

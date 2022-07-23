@@ -26,7 +26,7 @@ export const SidebarData = [
   },
   {
     name: 'Withdrawal Confirmation',
-    route: '/Withdconfm'
+    route: '/Withdrawconfm'
   },
   {
     name: 'Account Details',

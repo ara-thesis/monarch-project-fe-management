@@ -4,27 +4,38 @@ import React, { useEffect, useState } from 'react'
 // Const Table = ({ news, handleEdit, handleDelete }) => {
 function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
   // Let newsList = [];
-  const [newsList = [], newsListHook] = useState()
+  const [withdList = [], withdListHook] = useState()
   const [isUpdated, setIsUpdated] = useState(true)
 
   const fetchProcess = async () => {
-    try {
-      const resp = await apiNews.get('/payment')
-      if (resp.data.data[0] !== null) newsListHook(resp.data.data)
-      else newsListHook([])
-      setIsAuthorized(true)
-    } catch (err) {
-      if (err.request.status === 403) {
-        setIsAuthorized(false)
-      }
-    }
+    // try {
+    //   const resp = await apiNews.get('/payment')
+    //   if (resp.data.data[0] !== null) withdListHook(resp.data.data)
+    //   else withdListHook([])
+    //   setIsAuthorized(true)
+    // } catch (err) {
+    //   if (err.request.status === 403) {
+    //     setIsAuthorized(false)
+    //   }
+    // }
+    withdListHook([{
+      id: 'asdlfk1j23lk4j123asdf',
+      placename: 'Ancol',
+      reqfund: 100000,
+      bankacc: 'asdf09asd90f'
+    },{
+      id: 'f90g8hjf908g90fb90fg',
+      placename: 'TMII',
+      reqfund: 200000,
+      bankacc: 'as23339asaaf'
+    }])
     setIsUpdated(false)
   }
 
   useEffect(() => {
 
     fetchProcess()
-  }, [apiNews, newsList]
+  }, [apiNews, withdList]
   )
 
   return (
@@ -36,10 +47,7 @@ function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
               No.
             </th>
             <th>
-              Name
-            </th>
-            <th>
-              Total Price
+              Place Name
             </th>
             <th
               className="text-center"
@@ -50,17 +58,14 @@ function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
         </thead>
 
         <tbody>
-          {newsList.length > 0 ? (
-            newsList.map((EditNews, i) => (
-              <tr key={EditNews.id}>
+          {withdList.length > 0 ? (
+            withdList.map((WithdrawRequest, i) => (
+              <tr key={WithdrawRequest.id}>
                 <td>
                   {i + 1}
                 </td>
                 <td>
-                  {EditNews.total_price}
-                </td>
-                <td>
-                  {EditNews.created_at}
+                  {WithdrawRequest.placename}
                 </td>
 
                 <td className="text-right">
@@ -68,7 +73,7 @@ function Table({ apiNews, setIsEditing, setCurrData, setIsAuthorized }) {
                     className="button muted-button"
                     onClick={() => {
                       setIsEditing(true)
-                      setCurrData(EditNews)
+                      setCurrData(WithdrawRequest)
                     }}>
                     Details
                   </button>

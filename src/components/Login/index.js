@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { ApiConnect } from '../../helper/ApiConnect'
+import { SetToken } from '../../helper/TokenHelper'
 import Swal from 'sweetalert2'
 
 function Login() {
@@ -11,53 +12,40 @@ function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const apiLogin = axios.create({
-    baseURL: 'http://172.22.56.135:8000/api',
-    // withCredentials: true,
-    timeout: 0,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
-
+  const apiLogin = ApiConnect('')
   const handleLogin = (e) => {
     e.preventDefault()
 
-    apiLogin.post(
-      '/auth/login',
-      {
-        username: email,
-        password
-      }
-    ).then((resp) => {
-      // Set token
-      const respData = resp.data
-      localStorage.setItem(
-        'token',
-        respData.data[0].token
-      )
-
-      // Success message
-      Swal.fire({
-        timer: 1500, //timer untuk menutup popup login secara otomatis ketika tidak ada action apa2 dalam 1500 detik
-        showConfirmButton: false,
-        willOpen: () => {
-          Swal.showLoading()
-        },
-        willClose: () => {
-
-          Swal.fire({
-            icon: 'success',
-            title: 'Successfully logged in!',
-            showConfirmButton: false,
-            timer: 1500
-          })
-
-          window.location = '/'
-          
-        }
-      })
+    apiLogin.post('/auth/login', {
+      username: email,
+      password
     })
+      .then((resp) => {
+        // Set token
+        const respData = resp.data
+        SetToken(respData.data[0].token)
+
+        // Success message
+        Swal.fire({
+          timer: 1500, //timer untuk menutup popup login secara otomatis ketika tidak ada action apa2 dalam 1500 detik
+          showConfirmButton: false,
+          willOpen: () => {
+            Swal.showLoading()
+          },
+          willClose: () => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Successfully logged in!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+
+            window.location = '/'
+
+          }
+        })
+      })
       .catch((e) => {
         Swal.fire({
           timer: 1500,

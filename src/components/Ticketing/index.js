@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { ApiConnect } from '../../helper/ApiConnect'
+import { GetToken } from '../../helper/TokenHelper'
 
 import Header from './Header'
 import TableTicketList from './TableTicketList'
@@ -16,14 +17,7 @@ function TicketDashboard() {
   const [isAuthorized, setIsAuthorized] = useState(true)
   const [currData, setCurrData] = useState()
 
-  const apiTicket = axios.create({
-    baseURL: 'http://172.22.56.135:8000/api',
-    timeout: 0,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  })
+  const apiTicket = ApiConnect(GetToken)
 
   return (
     <div className="container">
